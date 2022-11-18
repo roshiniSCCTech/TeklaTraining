@@ -1,5 +1,4 @@
-﻿using HelperClasses;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -32,12 +31,10 @@ namespace ExtendedPlatformWithHandrail
 
         private void btn_createPlatformHandrail_Click(object sender, EventArgs e)
         { 
-            this.getInputs();
-            this.createStack();
-
+          
         }
 
-        private void createStack()
+        /*private void createStack()
         {
             int counter1 = 0;
             double heightUptoSegmentBase = 0.0D;
@@ -85,7 +82,7 @@ namespace ExtendedPlatformWithHandrail
                 Convert.ToDouble(txt_height3.Text),
                 Convert.ToDouble(txt_thickness3.Text)});
 
-        }
+        }*/
 
     }
 }

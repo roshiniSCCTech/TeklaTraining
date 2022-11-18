@@ -1,0 +1,12 @@
+C:\Users\Roshini S\source\repos\TeklaTrainingProjects\HelperLibrary\bin\Debug\net6.0\HelperLibrary.deps.json
+C:\Users\Roshini S\source\repos\TeklaTrainingProjects\HelperLibrary\bin\Debug\net6.0\HelperLibrary.dll
+C:\Users\Roshini S\source\repos\TeklaTrainingProjects\HelperLibrary\bin\Debug\net6.0\HelperLibrary.pdb
+C:\Users\Roshini S\source\repos\TeklaTrainingProjects\HelperLibrary\obj\Debug\net6.0\HelperLibrary.csproj.AssemblyReference.cache
+C:\Users\Roshini S\source\repos\TeklaTrainingProjects\HelperLibrary\obj\Debug\net6.0\HelperLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Roshini S\source\repos\TeklaTrainingProjects\HelperLibrary\obj\Debug\net6.0\HelperLibrary.AssemblyInfoInputs.cache
+C:\Users\Roshini S\source\repos\TeklaTrainingProjects\HelperLibrary\obj\Debug\net6.0\HelperLibrary.AssemblyInfo.cs
+C:\Users\Roshini S\source\repos\TeklaTrainingProjects\HelperLibrary\obj\Debug\net6.0\HelperLibrary.csproj.CoreCompileInputs.cache
+C:\Users\Roshini S\source\repos\TeklaTrainingProjects\HelperLibrary\obj\Debug\net6.0\HelperLibrary.dll
+C:\Users\Roshini S\source\repos\TeklaTrainingProjects\HelperLibrary\obj\Debug\net6.0\refint\HelperLibrary.dll
+C:\Users\Roshini S\source\repos\TeklaTrainingProjects\HelperLibrary\obj\Debug\net6.0\HelperLibrary.pdb
+C:\Users\Roshini S\source\repos\TeklaTrainingProjects\HelperLibrary\obj\Debug\net6.0\ref\HelperLibrary.dll

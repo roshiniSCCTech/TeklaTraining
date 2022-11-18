@@ -4,7 +4,7 @@ using Tekla.Structures.Datatype;
 using T3D = Tekla.Structures.Geometry3d;
 using TSM = Tekla.Structures.Model;
 
-namespace HelperClasses
+namespace HelperLibrary
 {
     public class GeometricalHelperClass
     {
