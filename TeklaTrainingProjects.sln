@@ -5,7 +5,7 @@ VisualStudioVersion = 17.4.33103.184
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtendedPlatformWithHandrail", "ExtendedPlatformWithHandrail\ExtendedPlatformWithHandrail.csproj", "{1716BB9A-CE0C-465D-B9F6-D451EE00F6D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelperLibrary", "HelperLibrary\HelperLibrary.csproj", "{F09E3DD2-486F-472C-BA6A-5C563A9AC58C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelperLibrary", "HelperLibrary\HelperLibrary.csproj", "{0BF1AB30-EAFB-40E3-BBD2-332FD467219C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{1716BB9A-CE0C-465D-B9F6-D451EE00F6D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1716BB9A-CE0C-465D-B9F6-D451EE00F6D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1716BB9A-CE0C-465D-B9F6-D451EE00F6D6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F09E3DD2-486F-472C-BA6A-5C563A9AC58C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F09E3DD2-486F-472C-BA6A-5C563A9AC58C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F09E3DD2-486F-472C-BA6A-5C563A9AC58C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F09E3DD2-486F-472C-BA6A-5C563A9AC58C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BF1AB30-EAFB-40E3-BBD2-332FD467219C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BF1AB30-EAFB-40E3-BBD2-332FD467219C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BF1AB30-EAFB-40E3-BBD2-332FD467219C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BF1AB30-EAFB-40E3-BBD2-332FD467219C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

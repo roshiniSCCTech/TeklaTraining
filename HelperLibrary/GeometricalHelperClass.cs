@@ -22,7 +22,7 @@ namespace HelperLibrary
         // it gets shifted anti-clockwise if offset is positive, it gets shifted clockwise if offset is negative
         protected TSM.ContourPoint ShiftAlongCircumferenceRad(TSM.ContourPoint point, double offset, short option) // 1. offset = angle in radians / arcLen / chordLen, 2. option = 1(angle), 2(arcLen), 3(chordLen)
         {
-            TSM.ContourPoint shiftedPt = null;
+            TSM.ContourPoint shiftedPt;
             double ptAngle = Math.Atan((point.Y - _originY) / (point.X - _originX)); //angle of point from X - axis
             double rad = Math.Sqrt(Math.Pow((point.Y - _originY), 2) + Math.Pow((point.X - _originX), 2));
             switch (option)
@@ -49,6 +49,7 @@ namespace HelperLibrary
                     point.Z), null);
                     break;
                 default:
+                    shiftedPt = point;
                     break;
             }
             return shiftedPt;
@@ -60,7 +61,7 @@ namespace HelperLibrary
         // when angle is given, the 4 axis gets rotated by that angle.
         protected TSM.ContourPoint ShiftHorizontallyRad(TSM.ContourPoint point, double dist, int side, double angle = double.NaN)
         {
-            TSM.ContourPoint shiftedPt = null;
+            TSM.ContourPoint shiftedPt;
             if (double.IsNaN(angle))
             {
                 angle = Math.Atan((point.Y - _originY) / (point.X - _originX)); // angle of point from x-axis
@@ -93,6 +94,7 @@ namespace HelperLibrary
                     point.Z), null);
                     break;
                 default:
+                    shiftedPt = point;
                     break;
             }
 
