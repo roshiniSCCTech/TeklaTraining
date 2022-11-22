@@ -8,44 +8,44 @@ namespace HelperLibrary
 {
     public class GeometricalHelperClass
     {
-        readonly double _originX;
-        readonly double _originY;
-        readonly double _originZ;
+        readonly T3D.Point _origin;
 
         protected GeometricalHelperClass(double originX, double originY, double originZ)
         {
-            _originX = originX;
-            _originY = originY;
-            _originZ = originZ;
+            _origin = new T3D.Point(originX, originY, originZ);
         }
         // new point gets shifted along circumference at same elevation of given point
         // it gets shifted anti-clockwise if offset is positive, it gets shifted clockwise if offset is negative
         protected TSM.ContourPoint ShiftAlongCircumferenceRad(TSM.ContourPoint point, double offset, short option) // 1. offset = angle in radians / arcLen / chordLen, 2. option = 1(angle), 2(arcLen), 3(chordLen)
         {
             TSM.ContourPoint shiftedPt;
-            double ptAngle = Math.Atan((point.Y - _originY) / (point.X - _originX)); //angle of point from X - axis
-            double rad = Math.Sqrt(Math.Pow((point.Y - _originY), 2) + Math.Pow((point.X - _originX), 2));
+            double ptAngle = Math.Atan((point.Y - _origin.Y) / (point.X - _origin.X)); //angle of point from X - axis
+            if (point.X < _origin.X)
+            {
+                ptAngle += Math.PI;
+            }
+            double rad = Math.Sqrt(Math.Pow((point.Y - _origin.Y), 2) + Math.Pow((point.X - _origin.X), 2));
             switch (option)
             {
                 case 1:  // shift point by offset = angle (in radians)
                     shiftedPt = new TSM.ContourPoint(new T3D.Point(
-                    rad * Math.Cos(ptAngle + offset),
-                    rad * Math.Sin(ptAngle + offset),
+                    _origin.X + (rad * Math.Cos(ptAngle + offset)),
+                    _origin.Y + (rad * Math.Sin(ptAngle + offset)),
                     point.Z), null);
                     break;
 
                 case 2:  // shift point by offset = arc length
                     shiftedPt = new TSM.ContourPoint(new T3D.Point(
-                    rad * Math.Cos(ptAngle + (offset / rad)),
-                    rad * Math.Sin(ptAngle + (offset / rad)), 
+                    _origin.X + (rad * Math.Cos(ptAngle + (offset / rad))),
+                    _origin.Y + (rad * Math.Sin(ptAngle + (offset / rad))), 
                     point.Z), null);
                     break;
 
                 case 3: // shift point by offset = chord length
                     double theta = Math.Asin(offset / (2 * rad)) * 2;
                     shiftedPt = new TSM.ContourPoint(new T3D.Point(
-                    rad * Math.Cos(ptAngle + theta),
-                    rad * Math.Sin(ptAngle + theta),
+                    _origin.X + (rad * Math.Cos(ptAngle + theta)),
+                    _origin.Y + (rad * Math.Sin(ptAngle + theta)),
                     point.Z), null);
                     break;
                 default:
@@ -64,7 +64,11 @@ namespace HelperLibrary
             TSM.ContourPoint shiftedPt;
             if (double.IsNaN(angle))
             {
-                angle = Math.Atan((point.Y - _originY) / (point.X - _originX)); // angle of point from x-axis
+                angle = Math.Atan((point.Y - _origin.Y) / (point.X - _origin.X)); // angle of point from x-axis
+                if (point.X < _origin.X)
+                {
+                    angle += Math.PI;
+                }
             }
 
             switch(side)
@@ -106,10 +110,35 @@ namespace HelperLibrary
         // it gets shifted above if dist is positive, gets shifted below if dist is negative
         protected TSM.ContourPoint ShiftVertically(TSM.ContourPoint point, double dist)
         {
-            TSM.ContourPoint shiftedPt = null;
-            shiftedPt = point;
-            shiftedPt.Z = point.Z + dist;
+            TSM.ContourPoint shiftedPt = new TSM.ContourPoint(point, null);
+            shiftedPt.Z += dist;
             return shiftedPt;
         }
+
+        protected double DistanceBetweenPoints( T3D.Point point1, T3D.Point point2)
+        {
+            double distance = Math.Sqrt(Math.Pow((point1.Y - point2.Y), 2) + Math.Pow((point1.X - point2.X), 2));
+            return distance;
+        }
+
+        protected double AngleBetweenPoints(T3D.Point point1, T3D.Point point2)
+        {
+            double rad = DistanceBetweenPoints(_origin, point1);
+            double chordLength = DistanceBetweenPoints(point2, point1);
+
+            double angle = Math.Asin(chordLength / (2 * rad)) * 2; ;
+
+            return angle;
+        }
+
+        protected double ArcLengthBetweenPoints(T3D.Point point1, T3D.Point point2)
+        {
+            double rad = DistanceBetweenPoints(_origin, point1);
+            double angle = AngleBetweenPoints(point2, point1);
+
+            double arcLength = rad * angle;
+            return arcLength;
+        }
+
     }
 }

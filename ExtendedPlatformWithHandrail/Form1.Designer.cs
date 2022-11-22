@@ -55,6 +55,17 @@
             this.lbl_seg1 = new System.Windows.Forms.Label();
             this.lbl_seg2 = new System.Windows.Forms.Label();
             this.lbl_seg3 = new System.Windows.Forms.Label();
+            this.lbl_startAngle = new System.Windows.Forms.Label();
+            this.lbl_endAngle = new System.Windows.Forms.Label();
+            this.lbl_length = new System.Windows.Forms.Label();
+            this.lbl_platform = new System.Windows.Forms.Label();
+            this.lbl_platformExtension = new System.Windows.Forms.Label();
+            this.txt_platformStartAngle = new System.Windows.Forms.TextBox();
+            this.txt_platformEndAngle = new System.Windows.Forms.TextBox();
+            this.txt_platformLength = new System.Windows.Forms.TextBox();
+            this.txt_extensionStartAngle = new System.Windows.Forms.TextBox();
+            this.txt_extensionEndAngle = new System.Windows.Forms.TextBox();
+            this.txt_extensionLength = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // lbl_originX
@@ -314,12 +325,128 @@
             this.lbl_seg3.TabIndex = 30;
             this.lbl_seg3.Text = "3";
             // 
+            // lbl_startAngle
+            // 
+            this.lbl_startAngle.AutoSize = true;
+            this.lbl_startAngle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_startAngle.Location = new System.Drawing.Point(239, 281);
+            this.lbl_startAngle.Name = "lbl_startAngle";
+            this.lbl_startAngle.Size = new System.Drawing.Size(89, 20);
+            this.lbl_startAngle.TabIndex = 31;
+            this.lbl_startAngle.Text = "Start Angle";
+            this.lbl_startAngle.Click += new System.EventHandler(this.lbl_startAngle_Click);
+            // 
+            // lbl_endAngle
+            // 
+            this.lbl_endAngle.AutoSize = true;
+            this.lbl_endAngle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_endAngle.Location = new System.Drawing.Point(424, 281);
+            this.lbl_endAngle.Name = "lbl_endAngle";
+            this.lbl_endAngle.Size = new System.Drawing.Size(83, 20);
+            this.lbl_endAngle.TabIndex = 32;
+            this.lbl_endAngle.Text = "End Angle";
+            // 
+            // lbl_length
+            // 
+            this.lbl_length.AutoSize = true;
+            this.lbl_length.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_length.Location = new System.Drawing.Point(609, 281);
+            this.lbl_length.Name = "lbl_length";
+            this.lbl_length.Size = new System.Drawing.Size(59, 20);
+            this.lbl_length.TabIndex = 33;
+            this.lbl_length.Text = "Length";
+            // 
+            // lbl_platform
+            // 
+            this.lbl_platform.AutoSize = true;
+            this.lbl_platform.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_platform.Location = new System.Drawing.Point(25, 326);
+            this.lbl_platform.Name = "lbl_platform";
+            this.lbl_platform.Size = new System.Drawing.Size(68, 20);
+            this.lbl_platform.TabIndex = 34;
+            this.lbl_platform.Text = "Platform";
+            // 
+            // lbl_platformExtension
+            // 
+            this.lbl_platformExtension.AutoSize = true;
+            this.lbl_platformExtension.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_platformExtension.Location = new System.Drawing.Point(25, 406);
+            this.lbl_platformExtension.Name = "lbl_platformExtension";
+            this.lbl_platformExtension.Size = new System.Drawing.Size(142, 20);
+            this.lbl_platformExtension.TabIndex = 35;
+            this.lbl_platformExtension.Text = "Platform Extension";
+            // 
+            // txt_platformStartAngle
+            // 
+            this.txt_platformStartAngle.AccessibleName = "";
+            this.txt_platformStartAngle.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_platformStartAngle.Location = new System.Drawing.Point(220, 315);
+            this.txt_platformStartAngle.Name = "txt_platformStartAngle";
+            this.txt_platformStartAngle.Size = new System.Drawing.Size(121, 31);
+            this.txt_platformStartAngle.TabIndex = 36;
+            // 
+            // txt_platformEndAngle
+            // 
+            this.txt_platformEndAngle.AccessibleName = "";
+            this.txt_platformEndAngle.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_platformEndAngle.Location = new System.Drawing.Point(402, 315);
+            this.txt_platformEndAngle.Name = "txt_platformEndAngle";
+            this.txt_platformEndAngle.Size = new System.Drawing.Size(121, 31);
+            this.txt_platformEndAngle.TabIndex = 37;
+            // 
+            // txt_platformLength
+            // 
+            this.txt_platformLength.AccessibleName = "";
+            this.txt_platformLength.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_platformLength.Location = new System.Drawing.Point(572, 315);
+            this.txt_platformLength.Name = "txt_platformLength";
+            this.txt_platformLength.Size = new System.Drawing.Size(121, 31);
+            this.txt_platformLength.TabIndex = 38;
+            // 
+            // txt_extensionStartAngle
+            // 
+            this.txt_extensionStartAngle.AccessibleName = "";
+            this.txt_extensionStartAngle.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_extensionStartAngle.Location = new System.Drawing.Point(220, 395);
+            this.txt_extensionStartAngle.Name = "txt_extensionStartAngle";
+            this.txt_extensionStartAngle.Size = new System.Drawing.Size(121, 31);
+            this.txt_extensionStartAngle.TabIndex = 39;
+            // 
+            // txt_extensionEndAngle
+            // 
+            this.txt_extensionEndAngle.AccessibleName = "";
+            this.txt_extensionEndAngle.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_extensionEndAngle.Location = new System.Drawing.Point(402, 395);
+            this.txt_extensionEndAngle.Name = "txt_extensionEndAngle";
+            this.txt_extensionEndAngle.Size = new System.Drawing.Size(121, 31);
+            this.txt_extensionEndAngle.TabIndex = 40;
+            // 
+            // txt_extensionLength
+            // 
+            this.txt_extensionLength.AccessibleName = "";
+            this.txt_extensionLength.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_extensionLength.Location = new System.Drawing.Point(572, 395);
+            this.txt_extensionLength.Name = "txt_extensionLength";
+            this.txt_extensionLength.Size = new System.Drawing.Size(121, 31);
+            this.txt_extensionLength.TabIndex = 41;
+            // 
             // inputForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ClientSize = new System.Drawing.Size(1182, 661);
+            this.Controls.Add(this.txt_extensionLength);
+            this.Controls.Add(this.txt_extensionEndAngle);
+            this.Controls.Add(this.txt_extensionStartAngle);
+            this.Controls.Add(this.txt_platformLength);
+            this.Controls.Add(this.txt_platformEndAngle);
+            this.Controls.Add(this.txt_platformStartAngle);
+            this.Controls.Add(this.lbl_platformExtension);
+            this.Controls.Add(this.lbl_platform);
+            this.Controls.Add(this.lbl_length);
+            this.Controls.Add(this.lbl_endAngle);
+            this.Controls.Add(this.lbl_startAngle);
             this.Controls.Add(this.lbl_seg3);
             this.Controls.Add(this.lbl_seg2);
             this.Controls.Add(this.lbl_seg1);
@@ -384,6 +511,17 @@
         private System.Windows.Forms.Label lbl_seg1;
         private System.Windows.Forms.Label lbl_seg2;
         private System.Windows.Forms.Label lbl_seg3;
+        private System.Windows.Forms.Label lbl_startAngle;
+        private System.Windows.Forms.Label lbl_endAngle;
+        private System.Windows.Forms.Label lbl_length;
+        private System.Windows.Forms.Label lbl_platform;
+        private System.Windows.Forms.Label lbl_platformExtension;
+        public System.Windows.Forms.TextBox txt_platformStartAngle;
+        public System.Windows.Forms.TextBox txt_platformEndAngle;
+        public System.Windows.Forms.TextBox txt_platformLength;
+        public System.Windows.Forms.TextBox txt_extensionStartAngle;
+        public System.Windows.Forms.TextBox txt_extensionEndAngle;
+        public System.Windows.Forms.TextBox txt_extensionLength;
     }
 }
 

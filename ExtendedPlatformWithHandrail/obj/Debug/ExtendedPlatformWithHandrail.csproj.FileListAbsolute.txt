@@ -18,3 +18,11 @@ C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandra
 C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandrail\obj\Debug\ExtendedPlatformWithHandrail.csproj.CopyComplete
 C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandrail\obj\Debug\ExtendedPlatformWithHandrail.exe
 C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandrail\obj\Debug\ExtendedPlatformWithHandrail.pdb
+C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandrail\bin\Debug\System.Configuration.ConfigurationManager.dll
+C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandrail\bin\Debug\System.Security.AccessControl.dll
+C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandrail\bin\Debug\System.Security.Permissions.dll
+C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandrail\bin\Debug\System.Security.Principal.Windows.dll
+C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandrail\bin\Debug\System.Configuration.ConfigurationManager.xml
+C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandrail\bin\Debug\System.Security.AccessControl.xml
+C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandrail\bin\Debug\System.Security.Permissions.xml
+C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandrail\bin\Debug\System.Security.Principal.Windows.xml
