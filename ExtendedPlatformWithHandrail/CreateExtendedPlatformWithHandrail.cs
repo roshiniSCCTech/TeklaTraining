@@ -8,6 +8,7 @@ using TSM = Tekla.Structures.Model;
 using HelperLibrary;
 using static Tekla.Structures.Filtering.Categories.TaskFilterExpressions;
 using Tekla.Structures.Model;
+using System.Transactions;
 
 namespace ExtendedPlatformWithHandrail
 {
@@ -21,6 +22,7 @@ namespace ExtendedPlatformWithHandrail
         string _nameStr;
         TSM.Position _position;
 
+        // 0 - top diameter, 1 - bottom diameter, 2 - height, 3 - thickness, 4 - height from base stack to bottom of segment
         readonly List<List<Double>> _stackSegList;
         readonly int _numberOfSegments;
 
@@ -31,6 +33,15 @@ namespace ExtendedPlatformWithHandrail
         readonly double _extensionStartAngle;
         readonly double _extensionEndAngle;
         readonly double _extensionLength;
+
+
+        const double minHandrailModuleArcLength = 1725;
+        const double maxHandrailModuleArcLength = 3500;
+
+        List<ContourPoint> pointsList;
+
+        double segRadius;
+        double segRadiusWithThickness;
 
         public CreateExtendedPlatformWithHandrail(
             double originX,
@@ -57,6 +68,8 @@ namespace ExtendedPlatformWithHandrail
             _extensionStartAngle = extensionStartAngle * Math.PI / 180;
             _extensionEndAngle = extensionEndAngle * Math.PI / 180;
             _extensionLength = extensionLength;
+
+            pointsList = new List<ContourPoint>();
         }
 
         public void Build()
@@ -68,6 +81,7 @@ namespace ExtendedPlatformWithHandrail
             CreateHandrail();
         }
 
+        // calculates height till bottom of the ith segment from base of the stack and adds it at 4th index in the List<double> of ith segment
         void CalculateElevation()
         {
             double elevation = 0;
@@ -78,7 +92,6 @@ namespace ExtendedPlatformWithHandrail
                 elevation += segment[2];
             }
         }
-
         void CreateStack()
         {
             int counter = 0;
@@ -97,6 +110,7 @@ namespace ExtendedPlatformWithHandrail
                 CreateBeam(startPoint, endPoint, _profileStr, _materialStr, _classStr, _position, "myBeam");
             }
         }
+
         void CreatePlatform()
         {
             ContourPoint platformOrigin = ShiftVertically(_origin, _stackSegList[2][4] + (_stackSegList[2][2])/2);
@@ -105,12 +119,9 @@ namespace ExtendedPlatformWithHandrail
             ContourPoint midPoint = new ContourPoint(ShiftAlongCircumferenceRad(startPoint, midAngle, 1), new Chamfer(0, 0, Chamfer.ChamferTypeEnum.CHAMFER_ARC_POINT));
             ContourPoint endPoint = ShiftHorizontallyRad(platformOrigin, _stackSegList[2][0] / 2 + _stackSegList[2][3], 1, _platformEndAngle);
 
-            List<ContourPoint> platformPointList = new List<ContourPoint>
-            {
-                startPoint,
-                midPoint,
-                endPoint
-            };
+            pointsList.Add(startPoint);
+            pointsList.Add(midPoint);
+            pointsList.Add(endPoint);
 
             _profileStr = "PL" + _platformLength + "*25";
             _classStr = "10";
@@ -118,7 +129,9 @@ namespace ExtendedPlatformWithHandrail
             _position.Rotation = Position.RotationEnum.FRONT;
             _position.Depth = Position.DepthEnum.BEHIND; 
 
-            CreatePolyBeam(platformPointList, _profileStr, _materialStr, _classStr, _position, "Platform");
+            CreatePolyBeam(pointsList, _profileStr, _materialStr, _classStr, _position, "Platform");
+
+            pointsList.Clear();
         }
         void CreateExtendedPlatform()
         {
@@ -146,50 +159,143 @@ namespace ExtendedPlatformWithHandrail
 
         void CreateHandrail()
         {
+            double remainingPlatformAngle = _platformEndAngle - _platformStartAngle;
+
             ContourPoint platformOrigin = ShiftVertically(_origin, _stackSegList[2][4] + (_stackSegList[2][2]) / 2);
-            ContourPoint startPoint = ShiftHorizontallyRad(platformOrigin, _stackSegList[2][0] / 2 + _stackSegList[2][3] + _platformLength + _extensionLength, 1, _extensionStartAngle);
-            ContourPoint endPoint = ShiftHorizontallyRad(platformOrigin, _stackSegList[2][0] / 2 + _stackSegList[2][3] + _platformLength + _extensionLength, 1, _extensionEndAngle);
+            ContourPoint startPoint;
+            ContourPoint endPoint;
+
+            // first half of platform
+
+            startPoint = ShiftHorizontallyRad(platformOrigin, _stackSegList[2][0] / 2 + _stackSegList[2][3] + _platformLength, 1, _platformStartAngle);
+            endPoint = ShiftHorizontallyRad(platformOrigin, _stackSegList[2][0] / 2 + _stackSegList[2][3] + _platformLength, 1, _extensionStartAngle);
+
+            if(startPoint != endPoint)
+            {
+                CreateHandrailBetweenPoints(startPoint, endPoint);
+            }
+            
+            // extension
+
+            startPoint = ShiftHorizontallyRad(platformOrigin, _stackSegList[2][0] / 2 + _stackSegList[2][3] + _platformLength + _extensionLength, 1, _extensionStartAngle);
+            endPoint = ShiftHorizontallyRad(platformOrigin, _stackSegList[2][0] / 2 + _stackSegList[2][3] + _platformLength + _extensionLength, 1, _extensionEndAngle);
 
             CreateHandrailBetweenPoints(startPoint, endPoint);
-        }
-        void CreateHandrailBetweenPoints(ContourPoint startPoint, ContourPoint endPoint)
-        {
-            double remainingPlatformArcDistance =  ArcLengthBetweenPoints(startPoint, endPoint);
-            double minHandrailArcLength = 1700;
-            double maxHandrailArcLength = 3500;
 
-            ContourPoint startSingleHandrail = startPoint;
-            ContourPoint endSingleHandrail;
+            // second half of platform
 
-            while( remainingPlatformArcDistance != 0)
+            startPoint = ShiftHorizontallyRad(platformOrigin, _stackSegList[2][0] / 2 + _stackSegList[2][3] + _platformLength, 1, _extensionEndAngle);
+            endPoint = ShiftHorizontallyRad(platformOrigin, _stackSegList[2][0] / 2 + _stackSegList[2][3] + _platformLength, 1, _platformEndAngle);
+
+            if (startPoint != endPoint)
             {
-                double singleHandrailArcDistance;
+                CreateHandrailBetweenPoints(startPoint, endPoint);
+            }
+        }
+        void CreateHandrailBetweenPoints(ContourPoint platformStartPoint, ContourPoint platformEndPoint)
+        {
+            double remainingPlatformArcDistance =  ArcLengthBetweenPoints(platformStartPoint, platformEndPoint);
 
-                if(remainingPlatformArcDistance <= maxHandrailArcLength)
+            ContourPoint handrailModuleStartPoint = platformStartPoint;
+            ContourPoint handrailModuleEndPoint;
+            double handrailModuleArcDistance;
+
+            while ( remainingPlatformArcDistance >= 0)
+            {
+                
+                if(remainingPlatformArcDistance <= maxHandrailModuleArcLength)
                 {
-                    singleHandrailArcDistance = remainingPlatformArcDistance;
+                    handrailModuleArcDistance = remainingPlatformArcDistance;
                 }
                 else
                 {
-                    if (remainingPlatformArcDistance - maxHandrailArcLength >= minHandrailArcLength)
+                    if (remainingPlatformArcDistance - maxHandrailModuleArcLength >= minHandrailModuleArcLength)
                     {
-                        singleHandrailArcDistance = maxHandrailArcLength;
+                        handrailModuleArcDistance = maxHandrailModuleArcLength;
                     }
                     else
                     {
-                        singleHandrailArcDistance = remainingPlatformArcDistance / 2;
+                        handrailModuleArcDistance = remainingPlatformArcDistance / 2 - 12.5;
                     }
                 }
 
-                endSingleHandrail = ShiftAlongCircumferenceRad(startSingleHandrail, singleHandrailArcDistance, 2);
+                handrailModuleEndPoint = ShiftAlongCircumferenceRad(handrailModuleStartPoint, handrailModuleArcDistance, 2);
 
-                CreateBeam(startSingleHandrail, endSingleHandrail, "ROD10", _materialStr, "2", _position);
+                CreateHandrailModule(handrailModuleStartPoint, handrailModuleEndPoint);
 
-                startSingleHandrail = endSingleHandrail;
-                remainingPlatformArcDistance -= singleHandrailArcDistance;
+                handrailModuleStartPoint = ShiftAlongCircumferenceRad(handrailModuleEndPoint, 25, 2);
+                remainingPlatformArcDistance -= handrailModuleArcDistance + 25;
             }
 
         }
+        void CreateHandrailModule(ContourPoint startPoint, ContourPoint endPoint)
+        {
+            startPoint = ShiftVertically(startPoint, (1000 - 21.2));
+            endPoint = ShiftVertically(endPoint, (1000 - 21.2));
 
+            startPoint = ShiftHorizontallyRad(startPoint, 21.2, 3);
+            endPoint = ShiftHorizontallyRad(endPoint, 21.2, 3);
+
+            startPoint = ShiftAlongCircumferenceRad(startPoint, 250, 2);
+            endPoint = ShiftAlongCircumferenceRad(endPoint, -250, 2);
+
+            double midArc = ArcLengthBetweenPoints(startPoint, endPoint) / 2;
+
+            ContourPoint midPoint = ShiftAlongCircumferenceRad(startPoint, midArc, 2);
+
+            _profileStr = "32NB(M) PIPE";
+            _classStr = "2";
+            _position.Plane = Position.PlaneEnum.MIDDLE;
+            _position.Depth = Position.DepthEnum.MIDDLE;
+
+            // vertical rods
+
+            CreateBeam(startPoint, ShiftVertically(startPoint, -(1000 - 21.2)), _profileStr, _materialStr, _classStr, _position);
+            CreateBeam(midPoint, ShiftVertically(midPoint, -(1000 - 21.2)), _profileStr, _materialStr, _classStr, _position);
+            CreateBeam(endPoint, ShiftVertically(endPoint, -(1000 - 21.2)), _profileStr, _materialStr, _classStr, _position);
+
+            // horizontal rods
+
+            ContourPoint horizontalStartPoint = new ContourPoint(startPoint, null);
+            ContourPoint horizontalMidPoint = new ContourPoint(midPoint, new Chamfer(0, 0, Chamfer.ChamferTypeEnum.CHAMFER_ARC_POINT));
+            ContourPoint horizontalEndPoint = new ContourPoint(endPoint, null);
+            
+            for (int rod = 0; rod < 2; rod++)
+            {
+                pointsList.Add(horizontalStartPoint);
+                pointsList.Add(horizontalMidPoint);
+                pointsList.Add(horizontalEndPoint);
+
+                CreatePolyBeam(pointsList, _profileStr, _materialStr, _classStr, _position);
+
+                pointsList.Clear();
+
+                horizontalStartPoint = ShiftVertically(horizontalStartPoint, -(500 - 21.2));
+                horizontalMidPoint = ShiftVertically(horizontalMidPoint, -(500 - 21.2));
+                horizontalEndPoint = ShiftVertically(horizontalEndPoint, -(500 - 21.2));
+            }
+
+            // bent pipes
+
+            CreateBentPipe(startPoint, -(250 - 21.2), -(500 - 21.2));
+            CreateBentPipe(endPoint, (250 - 21.2), -(500 - 21.2));
+
+        }
+        void CreateBentPipe(ContourPoint point, double horizontalDistance, double verticalDistance)
+        {
+            ContourPoint point1 = new ContourPoint(point, null);
+            ContourPoint point2 = new ContourPoint(ShiftAlongCircumferenceRad(point1, horizontalDistance, 2), new Chamfer(42.4, 0, Chamfer.ChamferTypeEnum.CHAMFER_ROUNDING));
+            ContourPoint point3 = new ContourPoint(ShiftVertically(point2, verticalDistance), new Chamfer(100, 0, Chamfer.ChamferTypeEnum.CHAMFER_ROUNDING)); ;
+            ContourPoint point4 = ShiftVertically(point1, verticalDistance);
+
+            pointsList.Add(point1);
+            pointsList.Add(point2);
+            pointsList.Add(point3);
+            pointsList.Add(point4);
+
+            CreatePolyBeam(pointsList, _profileStr, _materialStr, _classStr, _position);
+
+            pointsList.Clear();
+        }
     }
 }

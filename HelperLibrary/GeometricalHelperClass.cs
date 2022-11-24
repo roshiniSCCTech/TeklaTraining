@@ -110,7 +110,7 @@ namespace HelperLibrary
         // it gets shifted above if dist is positive, gets shifted below if dist is negative
         protected TSM.ContourPoint ShiftVertically(TSM.ContourPoint point, double dist)
         {
-            TSM.ContourPoint shiftedPt = new TSM.ContourPoint(point, null);
+            TSM.ContourPoint shiftedPt = new TSM.ContourPoint(point, point.Chamfer);
             shiftedPt.Z += dist;
             return shiftedPt;
         }
@@ -140,5 +140,35 @@ namespace HelperLibrary
             return arcLength;
         }
 
+        // returns index of segment at elevation FROM STACK BASE
+        protected int GetSegmentAtElevation(double elevation, List<List<double>> stackSegList)
+        {
+            int index = 0;
+
+            for (int seg = 0; seg < stackSegList.Count; seg++)
+            {
+                if (elevation < stackSegList[seg][4] + stackSegList[seg][2])
+                {
+                    break;
+                }
+            }
+
+            return index;
+        }
+
+        // returns inner radius of segment at elevation FROM STACK BASE
+        protected double GetRadiusAtElevation(double elevation, List<List<double>> stackSeglist)
+        {
+            int seg = GetSegmentAtElevation(elevation, stackSeglist);
+            
+            double height1 = stackSeglist[seg][2];
+            double base1 = (stackSeglist[seg][1] - stackSeglist[seg][0]) / 2;
+            double height2 = stackSeglist[seg][4] - elevation;
+            double base2 = base1 * height2 / height1;
+
+            double radius = (stackSeglist[seg][0] / 2) + base2;
+
+            return radius;
+        }
     }
 }
