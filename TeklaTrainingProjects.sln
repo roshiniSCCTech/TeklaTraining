@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33103.184
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtendedPlatformWithHandrail", "ExtendedPlatformWithHandrail\ExtendedPlatformWithHandrail.csproj", "{1716BB9A-CE0C-465D-B9F6-D451EE00F6D6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteelStack", "ExtendedPlatformWithHandrail\SteelStack.csproj", "{1716BB9A-CE0C-465D-B9F6-D451EE00F6D6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelperLibrary", "HelperLibrary\HelperLibrary.csproj", "{0BF1AB30-EAFB-40E3-BBD2-332FD467219C}"
 EndProject

@@ -11,8 +11,10 @@ using System.Windows.Forms;
 using static Tekla.Structures.Filtering.Categories.TaskFilterExpressions;
 using T3D = Tekla.Structures.Geometry3d;
 using TSM = Tekla.Structures.Model;
+using ExtendedPlatformWithHandrail;
+using HelperLibrary;
 
-namespace ExtendedPlatformWithHandrail
+namespace SteelStack
 {
     public partial class inputForm : Form
     {
@@ -31,7 +33,7 @@ namespace ExtendedPlatformWithHandrail
             
         }
 
-        private void btn_createPlatformHandrail_Click(object sender, EventArgs e)
+        private void btn_createModel_Click(object sender, EventArgs e)
         {
             handleInputs();
             SendInputs();
@@ -166,7 +168,7 @@ namespace ExtendedPlatformWithHandrail
                 Convert.ToDouble(txt_thickness3.Text)
             });
 
-            CreateExtendedPlatformWithHandrail phObj = new CreateExtendedPlatformWithHandrail(
+            Globals global = new Globals(
                 Convert.ToDouble(txt_originX.Text),
                 Convert.ToDouble(txt_originY.Text),
                 Convert.ToDouble(txt_originZ.Text),
@@ -178,7 +180,14 @@ namespace ExtendedPlatformWithHandrail
                 Convert.ToDouble(txt_extensionEndAngle.Text),
                 Convert.ToDouble(txt_extensionLength.Text));
 
-            phObj.Build();
+            TeklaModelling teklaModel = new TeklaModelling(
+                Convert.ToDouble(txt_originX.Text),
+                Convert.ToDouble(txt_originY.Text),
+                Convert.ToDouble(txt_originZ.Text));
+
+            ComponentHandler componentHandle = new ComponentHandler(global, teklaModel);
+
+            
         }
 
         private void lbl_startAngle_Click(object sender, EventArgs e)

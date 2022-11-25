@@ -11,14 +11,14 @@ namespace HelperLibrary
 {
     public class TeklaModelling : GeometricalHelperClass
     {
-        protected TSM.Model Model;
+        public TSM.Model Model;
 
 
-        protected TeklaModelling(double originX, double originY, double originZ) : base(originX, originY, originZ)
+        public TeklaModelling(double originX, double originY, double originZ) : base(originX, originY, originZ)
         {
             Model = new TSM.Model();
         }
-        protected TSM.Beam CreateBeam(T3D.Point start, T3D.Point end, string profile, string material, string className, TSM.Position position, string name = "")
+        public TSM.Beam CreateBeam(T3D.Point start, T3D.Point end, string profile, string material, string className, TSM.Position position, string name = "")
         {
             TSM.Beam beam = new TSM.Beam();
             beam.StartPoint = start;
@@ -37,7 +37,7 @@ namespace HelperLibrary
             return beam;
         }
 
-        protected TSM.PolyBeam CreatePolyBeam(List<ContourPoint> pointsList, string profile, string material, string className, TSM.Position position, string name = "")
+        public TSM.PolyBeam CreatePolyBeam(List<ContourPoint> pointsList, string profile, string material, string className, TSM.Position position, string name = "")
         {
             TSM.PolyBeam polybeam = new TSM.PolyBeam();
             polybeam.Profile.ProfileString = profile;

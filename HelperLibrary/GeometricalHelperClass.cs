@@ -16,7 +16,7 @@ namespace HelperLibrary
         }
         // new point gets shifted along circumference at same elevation of given point
         // it gets shifted anti-clockwise if offset is positive, it gets shifted clockwise if offset is negative
-        protected TSM.ContourPoint ShiftAlongCircumferenceRad(TSM.ContourPoint point, double offset, short option) // 1. offset = angle in radians / arcLen / chordLen, 2. option = 1(angle), 2(arcLen), 3(chordLen)
+        public TSM.ContourPoint ShiftAlongCircumferenceRad(TSM.ContourPoint point, double offset, short option) // 1. offset = angle in radians / arcLen / chordLen, 2. option = 1(angle), 2(arcLen), 3(chordLen)
         {
             TSM.ContourPoint shiftedPt;
             double ptAngle = Math.Atan((point.Y - _origin.Y) / (point.X - _origin.X)); //angle of point from X - axis
@@ -59,7 +59,7 @@ namespace HelperLibrary
         // new point gets shifted along the 4 axis. 
         // when angle is not given as parametrer, the angle formed by point (first parameter) at the origin from x - axis is taken as angle.
         // when angle is given, the 4 axis gets rotated by that angle.
-        protected TSM.ContourPoint ShiftHorizontallyRad(TSM.ContourPoint point, double dist, int side, double angle = double.NaN)
+        public TSM.ContourPoint ShiftHorizontallyRad(TSM.ContourPoint point, double dist, int side, double angle = double.NaN)
         {
             TSM.ContourPoint shiftedPt;
             if (double.IsNaN(angle))
@@ -108,20 +108,20 @@ namespace HelperLibrary
 
         // new point gets shifted along z-axis by dist
         // it gets shifted above if dist is positive, gets shifted below if dist is negative
-        protected TSM.ContourPoint ShiftVertically(TSM.ContourPoint point, double dist)
+        public TSM.ContourPoint ShiftVertically(TSM.ContourPoint point, double dist)
         {
             TSM.ContourPoint shiftedPt = new TSM.ContourPoint(point, point.Chamfer);
             shiftedPt.Z += dist;
             return shiftedPt;
         }
 
-        protected double DistanceBetweenPoints( T3D.Point point1, T3D.Point point2)
+        public double DistanceBetweenPoints( T3D.Point point1, T3D.Point point2)
         {
             double distance = Math.Sqrt(Math.Pow((point1.Y - point2.Y), 2) + Math.Pow((point1.X - point2.X), 2));
             return distance;
         }
 
-        protected double AngleBetweenPoints(T3D.Point point1, T3D.Point point2)
+        public double AngleBetweenPoints(T3D.Point point1, T3D.Point point2)
         {
             double rad = DistanceBetweenPoints(_origin, point1);
             double chordLength = DistanceBetweenPoints(point2, point1);
@@ -131,7 +131,7 @@ namespace HelperLibrary
             return angle;
         }
 
-        protected double ArcLengthBetweenPoints(T3D.Point point1, T3D.Point point2)
+        public double ArcLengthBetweenPoints(T3D.Point point1, T3D.Point point2)
         {
             double rad = DistanceBetweenPoints(_origin, point1);
             double angle = AngleBetweenPoints(point2, point1);
@@ -141,7 +141,7 @@ namespace HelperLibrary
         }
 
         // returns index of segment at elevation FROM STACK BASE
-        protected int GetSegmentAtElevation(double elevation, List<List<double>> stackSegList)
+        public int GetSegmentAtElevation(double elevation, List<List<double>> stackSegList)
         {
             int index = 0;
 
@@ -157,7 +157,7 @@ namespace HelperLibrary
         }
 
         // returns inner radius of segment at elevation FROM STACK BASE
-        protected double GetRadiusAtElevation(double elevation, List<List<double>> stackSeglist)
+        public double GetRadiusAtElevation(double elevation, List<List<double>> stackSeglist)
         {
             int seg = GetSegmentAtElevation(elevation, stackSeglist);
             

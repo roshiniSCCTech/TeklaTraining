@@ -1,4 +1,4 @@
-﻿namespace ExtendedPlatformWithHandrail
+﻿namespace SteelStack
 {
     partial class inputForm
     {
@@ -34,7 +34,7 @@
             this.txt_originY = new System.Windows.Forms.TextBox();
             this.lbl_originZ = new System.Windows.Forms.Label();
             this.txt_originZ = new System.Windows.Forms.TextBox();
-            this.btn_createPlatformHandrail = new System.Windows.Forms.Button();
+            this.btn_createModel = new System.Windows.Forms.Button();
             this.txt_topDiameter1 = new System.Windows.Forms.TextBox();
             this.lbl_topDiameter = new System.Windows.Forms.Label();
             this.lbl_thickness = new System.Windows.Forms.Label();
@@ -66,6 +66,9 @@
             this.txt_extensionStartAngle = new System.Windows.Forms.TextBox();
             this.txt_extensionEndAngle = new System.Windows.Forms.TextBox();
             this.txt_extensionLength = new System.Windows.Forms.TextBox();
+            this.ck_handrail = new System.Windows.Forms.CheckBox();
+            this.ck_platform = new System.Windows.Forms.CheckBox();
+            this.ch_floorSteel = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // lbl_originX
@@ -126,16 +129,17 @@
             this.txt_originZ.Size = new System.Drawing.Size(121, 31);
             this.txt_originZ.TabIndex = 5;
             // 
-            // btn_createPlatformHandrail
+            // btn_createModel
             // 
-            this.btn_createPlatformHandrail.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.btn_createPlatformHandrail.Location = new System.Drawing.Point(1030, 598);
-            this.btn_createPlatformHandrail.Name = "btn_createPlatformHandrail";
-            this.btn_createPlatformHandrail.Size = new System.Drawing.Size(140, 51);
-            this.btn_createPlatformHandrail.TabIndex = 6;
-            this.btn_createPlatformHandrail.Text = "Create Platform and Handrail";
-            this.btn_createPlatformHandrail.UseVisualStyleBackColor = false;
-            this.btn_createPlatformHandrail.Click += new System.EventHandler(this.btn_createPlatformHandrail_Click);
+            this.btn_createModel.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.btn_createModel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_createModel.Location = new System.Drawing.Point(1030, 598);
+            this.btn_createModel.Name = "btn_createModel";
+            this.btn_createModel.Size = new System.Drawing.Size(140, 51);
+            this.btn_createModel.TabIndex = 6;
+            this.btn_createModel.Text = "Create Model";
+            this.btn_createModel.UseVisualStyleBackColor = false;
+            this.btn_createModel.Click += new System.EventHandler(this.btn_createModel_Click);
             // 
             // txt_topDiameter1
             // 
@@ -430,12 +434,45 @@
             this.txt_extensionLength.Size = new System.Drawing.Size(121, 31);
             this.txt_extensionLength.TabIndex = 41;
             // 
+            // ck_handrail
+            // 
+            this.ck_handrail.AutoSize = true;
+            this.ck_handrail.Location = new System.Drawing.Point(947, 36);
+            this.ck_handrail.Name = "ck_handrail";
+            this.ck_handrail.Size = new System.Drawing.Size(65, 17);
+            this.ck_handrail.TabIndex = 42;
+            this.ck_handrail.Text = "Handrail";
+            this.ck_handrail.UseVisualStyleBackColor = true;
+            // 
+            // ck_platform
+            // 
+            this.ck_platform.AutoSize = true;
+            this.ck_platform.Location = new System.Drawing.Point(947, 60);
+            this.ck_platform.Name = "ck_platform";
+            this.ck_platform.Size = new System.Drawing.Size(64, 17);
+            this.ck_platform.TabIndex = 43;
+            this.ck_platform.Text = "Platform";
+            this.ck_platform.UseVisualStyleBackColor = true;
+            // 
+            // ch_floorSteel
+            // 
+            this.ch_floorSteel.AutoSize = true;
+            this.ch_floorSteel.Location = new System.Drawing.Point(947, 83);
+            this.ch_floorSteel.Name = "ch_floorSteel";
+            this.ch_floorSteel.Size = new System.Drawing.Size(76, 17);
+            this.ch_floorSteel.TabIndex = 44;
+            this.ch_floorSteel.Text = "Floor Steel";
+            this.ch_floorSteel.UseVisualStyleBackColor = true;
+            // 
             // inputForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ClientSize = new System.Drawing.Size(1182, 661);
+            this.Controls.Add(this.ch_floorSteel);
+            this.Controls.Add(this.ck_platform);
+            this.Controls.Add(this.ck_handrail);
             this.Controls.Add(this.txt_extensionLength);
             this.Controls.Add(this.txt_extensionEndAngle);
             this.Controls.Add(this.txt_extensionStartAngle);
@@ -467,7 +504,7 @@
             this.Controls.Add(this.lbl_thickness);
             this.Controls.Add(this.lbl_topDiameter);
             this.Controls.Add(this.txt_topDiameter1);
-            this.Controls.Add(this.btn_createPlatformHandrail);
+            this.Controls.Add(this.btn_createModel);
             this.Controls.Add(this.txt_originZ);
             this.Controls.Add(this.lbl_originZ);
             this.Controls.Add(this.txt_originY);
@@ -490,7 +527,7 @@
         public System.Windows.Forms.TextBox txt_originX;
         public System.Windows.Forms.TextBox txt_originY;
         public System.Windows.Forms.TextBox txt_originZ;
-        private System.Windows.Forms.Button btn_createPlatformHandrail;
+        private System.Windows.Forms.Button btn_createModel;
         public System.Windows.Forms.TextBox txt_topDiameter1;
         private System.Windows.Forms.Label lbl_topDiameter;
         private System.Windows.Forms.Label lbl_thickness;
@@ -522,6 +559,9 @@
         public System.Windows.Forms.TextBox txt_extensionStartAngle;
         public System.Windows.Forms.TextBox txt_extensionEndAngle;
         public System.Windows.Forms.TextBox txt_extensionLength;
+        private System.Windows.Forms.CheckBox ck_handrail;
+        private System.Windows.Forms.CheckBox ck_platform;
+        private System.Windows.Forms.CheckBox ch_floorSteel;
     }
 }
 
