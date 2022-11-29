@@ -1,14 +1,8 @@
 C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandrail\obj\Debug\SteelStack.csproj.AssemblyReference.cache
 C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandrail\obj\Debug\SteelStack.csproj.SuggestedBindingRedirects.cache
 C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandrail\obj\Debug\SteelStack.inputForm.resources
-C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandrail\obj\Debug\ExtendedPlatformWithHandrail.Properties.Resources.resources
 C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandrail\obj\Debug\SteelStack.csproj.GenerateResource.cache
 C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandrail\obj\Debug\SteelStack.csproj.CoreCompileInputs.cache
-C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandrail\obj\Debug\ExtendedPlatformWithHandrail.exe
-C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandrail\obj\Debug\ExtendedPlatformWithHandrail.pdb
-C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandrail\bin\Debug\ExtendedPlatformWithHandrail.exe.config
-C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandrail\bin\Debug\ExtendedPlatformWithHandrail.exe
-C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandrail\bin\Debug\ExtendedPlatformWithHandrail.pdb
 C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandrail\bin\Debug\HelperLibrary.dll
 C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandrail\bin\Debug\System.Configuration.ConfigurationManager.dll
 C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandrail\bin\Debug\System.Security.AccessControl.dll
@@ -26,3 +20,9 @@ C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandra
 C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandrail\bin\Debug\Tekla.Structures.Datatype.xml
 C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandrail\bin\Debug\Tekla.Structures.Model.xml
 C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandrail\obj\Debug\SteelStack.csproj.CopyComplete
+C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandrail\obj\Debug\SteelStack.Properties.Resources.resources
+C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandrail\bin\Debug\SteelStack.exe.config
+C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandrail\bin\Debug\SteelStack.exe
+C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandrail\bin\Debug\SteelStack.pdb
+C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandrail\obj\Debug\SteelStack.exe
+C:\Users\Roshini S\source\repos\TeklaTrainingProjects\ExtendedPlatformWithHandrail\obj\Debug\SteelStack.pdb

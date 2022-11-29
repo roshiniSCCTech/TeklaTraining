@@ -18,7 +18,7 @@ namespace SteelStack
         
         public readonly TSM.ContourPoint Origin;
          
-        // 0 - top diameter, 1 - bottom diameter, 2 - height, 3 - thickness, 4 - height from base stack to bottom of segment
+        // 0 - top inner diameter, 1 - bottom inner diameter, 2 - height, 3 - thickness, 4 - height from base stack to bottom of segment
         public readonly List<List<Double>> StackSegList;
          
         public readonly double PlatformStartAngle;

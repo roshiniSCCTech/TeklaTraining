@@ -18,9 +18,12 @@ namespace SteelStack
             _global = global;
             _teklaModel = teklaModel;
 
-            new StackShell(global, teklaModel);
-            new Platform(global, teklaModel);
-            new Handrail(global, teklaModel);
+           //new StackShell(global, teklaModel);
+           //new Platform(global, teklaModel);
+           //new Handrail(global, teklaModel);
+           //new FloorSteel(global, teklaModel);
+
+            new Test(global, teklaModel);
 
         }
     }

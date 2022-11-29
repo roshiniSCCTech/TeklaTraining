@@ -47,7 +47,9 @@ namespace SteelStack.Components
                 T3D.Point startPoint = new T3D.Point(_global.Origin.X, _global.Origin.Y, _global.Origin.Z + _global.StackSegList[counter][4]);
                 T3D.Point endPoint = _tModel.ShiftVertically(new TSM.ContourPoint(startPoint, null), _global.StackSegList[counter][2]);
                 _global.NameStr = "segment" + (counter + 1);
-                _global.ProfileStr = "CHS" + _global.StackSegList[counter][1] + "*" + _global.StackSegList[counter][0] + "*" + _global.StackSegList[counter][3];
+
+                // CHS profile requires outer diameter, we get inner diameter fom user input. Hence outerDiameter = innerDiameter + (2 * segmentThickness)
+                _global.ProfileStr = "CHS" + (_global.StackSegList[counter][1] + (2 *  _global.StackSegList[counter][3])) + "*" + (_global.StackSegList[counter][0] + (2 * _global.StackSegList[counter][3])) + "*" + _global.StackSegList[counter][3];
                 _tModel.CreateBeam(startPoint, endPoint, _global.ProfileStr, Globals.MaterialStr, _global.ClassStr, _global.Position, "myBeam");
             }
         }

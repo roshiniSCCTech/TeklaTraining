@@ -11,7 +11,6 @@ using System.Windows.Forms;
 using static Tekla.Structures.Filtering.Categories.TaskFilterExpressions;
 using T3D = Tekla.Structures.Geometry3d;
 using TSM = Tekla.Structures.Model;
-using ExtendedPlatformWithHandrail;
 using HelperLibrary;
 
 namespace SteelStack

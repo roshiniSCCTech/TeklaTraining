@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Tekla.Structures.Datatype;
+using Tekla.Structures.Model;
+using static Tekla.Structures.Filtering.Categories.ReinforcingBarFilterExpressions;
 using T3D = Tekla.Structures.Geometry3d;
 using TSM = Tekla.Structures.Model;
 
@@ -20,7 +22,11 @@ namespace HelperLibrary
         {
             TSM.ContourPoint shiftedPt;
             double ptAngle = Math.Atan((point.Y - _origin.Y) / (point.X - _origin.X)); //angle of point from X - axis
-            if (point.X < _origin.X)
+            if (point.X == _origin.X)
+            {
+                ptAngle = 0;
+            }
+            else if (point.X < _origin.X)
             {
                 ptAngle += Math.PI;
             }
@@ -65,7 +71,11 @@ namespace HelperLibrary
             if (double.IsNaN(angle))
             {
                 angle = Math.Atan((point.Y - _origin.Y) / (point.X - _origin.X)); // angle of point from x-axis
-                if (point.X < _origin.X)
+                if (point.X == _origin.X)
+                {
+                    angle = 0;
+                }
+                else if (point.X < _origin.X)
                 {
                     angle += Math.PI;
                 }
@@ -163,12 +173,47 @@ namespace HelperLibrary
             
             double height1 = stackSeglist[seg][2];
             double base1 = (stackSeglist[seg][1] - stackSeglist[seg][0]) / 2;
-            double height2 = stackSeglist[seg][4] - elevation;
+            double height2 = (stackSeglist[seg][4] + stackSeglist[seg][2]) - elevation;
             double base2 = base1 * height2 / height1;
 
             double radius = (stackSeglist[seg][0] / 2) + base2;
 
             return radius;
+        }
+
+        public double SlopeOfLine(double[] P, double[] Q)
+        {
+            double slope = (Q[1] - P[1]) / (Q[0] - P[0]) ;
+            return slope;
+        }
+
+        // returns f(X) given the X for the equation of a point-slope form of a line
+        public double PointSlopeForm(double[] P, double slope, double X)
+        {
+            double Fx = (X * slope) - (P[0] * slope) + P[1];
+            return Fx;
+        }
+
+        public TSM.ContourPoint IntersectionOfLineXY(TSM.ContourPoint P1, TSM.ContourPoint P2, TSM.ContourPoint Q1, TSM.ContourPoint Q2)
+        {
+            double slope1 = SlopeOfLine(new[] { P1.X, P1.Y }, new[] { P2.X, P2.Y });
+            double slope2 = SlopeOfLine(new[] { Q1.X, Q1.Y }, new[] { Q2.X, Q2.Y });
+
+            double X = ((P1.X * slope1) - P1.Y - (Q1.X * slope2) + Q1.Y) / (slope1 - slope2);
+            double Y = PointSlopeForm(new[] { P1.X, P1.Y }, slope1, X);
+
+            return new TSM.ContourPoint(new T3D.Point(X, Y, P1.Z), null);
+        }
+
+        public TSM.ContourPoint IntersectionOfLineXZ(TSM.ContourPoint P1, TSM.ContourPoint P2, TSM.ContourPoint Q1, TSM.ContourPoint Q2)
+        {
+            double slope1 = SlopeOfLine(new[] { P1.X, P1.Z }, new[] { P2.X, P2.Z });
+            double slope2 = SlopeOfLine(new[] { Q1.X, Q1.Z }, new[] { Q2.X, Q2.Z });
+
+            double X = ((P1.X * slope1) - P1.Z - (Q1.X * slope2) + Q1.Z) / (slope1 - slope2);
+            double Z = PointSlopeForm(new[] { P1.X, P1.Z }, slope1, X);
+
+            return new TSM.ContourPoint(new T3D.Point(X, P1.Y, Z), null);
         }
     }
 }

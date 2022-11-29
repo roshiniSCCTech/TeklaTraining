@@ -57,5 +57,26 @@ namespace HelperLibrary
 
             return polybeam;
         }
+
+        public TSM.ContourPlate CreateContourPlate(List<ContourPoint> pointsList, string profile, string material, string className, TSM.Position position, string name = "")
+        {
+            TSM.ContourPlate plate = new TSM.ContourPlate();
+            plate.Profile.ProfileString = profile;
+            plate.Material.MaterialString = material;
+            plate.Position = position;
+            plate.Name = name;
+            plate.Class = className;
+            foreach (ContourPoint point in pointsList)
+            {
+                plate.AddContourPoint(point);
+            }
+
+            if (plate.Insert())
+            {
+                Model.CommitChanges();
+            }
+
+            return plate;
+        }
     }
 }
