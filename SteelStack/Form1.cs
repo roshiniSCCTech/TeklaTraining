@@ -184,12 +184,23 @@ namespace SteelStack
                 Convert.ToDouble(txt_originY.Text),
                 Convert.ToDouble(txt_originZ.Text));
 
-            ComponentHandler componentHandle = new ComponentHandler(global, teklaModel);
+
+            Dictionary<string, bool> checkComponents = new Dictionary<string, bool>();
+            checkComponents.Add("Platform", chk_platform.Checked);
+            checkComponents.Add("Handrail", chk_handrail.Checked);
+            checkComponents.Add("FloorSteel", chk_floorSteel.Checked);
+
+            ComponentHandler componentHandle = new ComponentHandler(global, teklaModel, checkComponents);
 
             
         }
 
         private void lbl_startAngle_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void chk_floorSteel_CheckedChanged(object sender, EventArgs e)
         {
 
         }

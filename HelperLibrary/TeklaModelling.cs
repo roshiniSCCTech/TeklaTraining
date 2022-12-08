@@ -78,5 +78,16 @@ namespace HelperLibrary
 
             return plate;
         }
+
+        public void cutPart(Part cut, Part toBeCut)
+        {
+            BooleanPart booleanPart = new BooleanPart();
+            booleanPart.Father = toBeCut;
+            booleanPart.SetOperativePart(cut);
+            booleanPart.Insert();
+            cut.Delete();
+            Model.CommitChanges();
+        }
+
     }
 }

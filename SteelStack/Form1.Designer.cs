@@ -66,9 +66,9 @@
             this.txt_extensionStartAngle = new System.Windows.Forms.TextBox();
             this.txt_extensionEndAngle = new System.Windows.Forms.TextBox();
             this.txt_extensionLength = new System.Windows.Forms.TextBox();
-            this.ck_handrail = new System.Windows.Forms.CheckBox();
-            this.ck_platform = new System.Windows.Forms.CheckBox();
-            this.ch_floorSteel = new System.Windows.Forms.CheckBox();
+            this.chk_handrail = new System.Windows.Forms.CheckBox();
+            this.chk_platform = new System.Windows.Forms.CheckBox();
+            this.chk_floorSteel = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // lbl_originX
@@ -434,35 +434,42 @@
             this.txt_extensionLength.Size = new System.Drawing.Size(121, 31);
             this.txt_extensionLength.TabIndex = 41;
             // 
-            // ck_handrail
+            // chk_handrail
             // 
-            this.ck_handrail.AutoSize = true;
-            this.ck_handrail.Location = new System.Drawing.Point(947, 36);
-            this.ck_handrail.Name = "ck_handrail";
-            this.ck_handrail.Size = new System.Drawing.Size(65, 17);
-            this.ck_handrail.TabIndex = 42;
-            this.ck_handrail.Text = "Handrail";
-            this.ck_handrail.UseVisualStyleBackColor = true;
+            this.chk_handrail.AutoSize = true;
+            this.chk_handrail.Checked = true;
+            this.chk_handrail.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chk_handrail.Location = new System.Drawing.Point(947, 58);
+            this.chk_handrail.Name = "chk_handrail";
+            this.chk_handrail.Size = new System.Drawing.Size(65, 17);
+            this.chk_handrail.TabIndex = 42;
+            this.chk_handrail.Text = "Handrail";
+            this.chk_handrail.UseVisualStyleBackColor = true;
             // 
-            // ck_platform
+            // chk_platform
             // 
-            this.ck_platform.AutoSize = true;
-            this.ck_platform.Location = new System.Drawing.Point(947, 60);
-            this.ck_platform.Name = "ck_platform";
-            this.ck_platform.Size = new System.Drawing.Size(64, 17);
-            this.ck_platform.TabIndex = 43;
-            this.ck_platform.Text = "Platform";
-            this.ck_platform.UseVisualStyleBackColor = true;
+            this.chk_platform.AutoSize = true;
+            this.chk_platform.Checked = true;
+            this.chk_platform.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chk_platform.Location = new System.Drawing.Point(947, 37);
+            this.chk_platform.Name = "chk_platform";
+            this.chk_platform.Size = new System.Drawing.Size(64, 17);
+            this.chk_platform.TabIndex = 43;
+            this.chk_platform.Text = "Platform";
+            this.chk_platform.UseVisualStyleBackColor = true;
             // 
-            // ch_floorSteel
+            // chk_floorSteel
             // 
-            this.ch_floorSteel.AutoSize = true;
-            this.ch_floorSteel.Location = new System.Drawing.Point(947, 83);
-            this.ch_floorSteel.Name = "ch_floorSteel";
-            this.ch_floorSteel.Size = new System.Drawing.Size(76, 17);
-            this.ch_floorSteel.TabIndex = 44;
-            this.ch_floorSteel.Text = "Floor Steel";
-            this.ch_floorSteel.UseVisualStyleBackColor = true;
+            this.chk_floorSteel.AutoSize = true;
+            this.chk_floorSteel.Checked = true;
+            this.chk_floorSteel.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chk_floorSteel.Location = new System.Drawing.Point(947, 81);
+            this.chk_floorSteel.Name = "chk_floorSteel";
+            this.chk_floorSteel.Size = new System.Drawing.Size(76, 17);
+            this.chk_floorSteel.TabIndex = 44;
+            this.chk_floorSteel.Text = "Floor Steel";
+            this.chk_floorSteel.UseVisualStyleBackColor = true;
+            this.chk_floorSteel.CheckedChanged += new System.EventHandler(this.chk_floorSteel_CheckedChanged);
             // 
             // inputForm
             // 
@@ -470,9 +477,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ClientSize = new System.Drawing.Size(1182, 661);
-            this.Controls.Add(this.ch_floorSteel);
-            this.Controls.Add(this.ck_platform);
-            this.Controls.Add(this.ck_handrail);
+            this.Controls.Add(this.chk_floorSteel);
+            this.Controls.Add(this.chk_platform);
+            this.Controls.Add(this.chk_handrail);
             this.Controls.Add(this.txt_extensionLength);
             this.Controls.Add(this.txt_extensionEndAngle);
             this.Controls.Add(this.txt_extensionStartAngle);
@@ -559,9 +566,9 @@
         public System.Windows.Forms.TextBox txt_extensionStartAngle;
         public System.Windows.Forms.TextBox txt_extensionEndAngle;
         public System.Windows.Forms.TextBox txt_extensionLength;
-        private System.Windows.Forms.CheckBox ck_handrail;
-        private System.Windows.Forms.CheckBox ck_platform;
-        private System.Windows.Forms.CheckBox ch_floorSteel;
+        private System.Windows.Forms.CheckBox chk_handrail;
+        private System.Windows.Forms.CheckBox chk_platform;
+        private System.Windows.Forms.CheckBox chk_floorSteel;
     }
 }
 

@@ -156,8 +156,8 @@ namespace SteelStack.Components
         void CreateBentPipe(TSM.ContourPoint point, double horizontalDistance, double verticalDistance)
         {
             TSM.ContourPoint point1 = new TSM.ContourPoint(point, null);
-            TSM.ContourPoint point2 = new TSM.ContourPoint(_tModel.ShiftAlongCircumferenceRad(point1, horizontalDistance, 2), new TSM.Chamfer(100, 0, TSM.Chamfer.ChamferTypeEnum.CHAMFER_ARC_POINT));
-            TSM.ContourPoint point3 = new TSM.ContourPoint(_tModel.ShiftVertically(point2, verticalDistance), new TSM.Chamfer(100, 0, TSM.Chamfer.ChamferTypeEnum.CHAMFER_ARC_POINT)); ;
+            TSM.ContourPoint point2 = new TSM.ContourPoint(_tModel.ShiftAlongCircumferenceRad(point1, horizontalDistance, 2), new TSM.Chamfer(100, 0, TSM.Chamfer.ChamferTypeEnum.CHAMFER_ROUNDING));
+            TSM.ContourPoint point3 = new TSM.ContourPoint(_tModel.ShiftVertically(point2, verticalDistance), new TSM.Chamfer(100, 0, TSM.Chamfer.ChamferTypeEnum.CHAMFER_ROUNDING)); ;
             TSM.ContourPoint point4 = _tModel.ShiftVertically(point1, verticalDistance);
 
             _pointsList.Add(point1);

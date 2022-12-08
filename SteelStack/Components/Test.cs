@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tekla.Structures.Model;
 using T3D = Tekla.Structures.Geometry3d;
 using TSM = Tekla.Structures.Model;
 
@@ -34,17 +35,22 @@ namespace SteelStack.Components
 
             TSM.ContourPoint origin = new TSM.ContourPoint(_global.Origin, null);
             TSM.ContourPoint p1 = new TSM.ContourPoint(_tModel.ShiftHorizontallyRad(origin, 5000, 1), new TSM.Chamfer(0, 0, TSM.Chamfer.ChamferTypeEnum.CHAMFER_ARC_POINT));
-            TSM.ContourPoint p2 = new TSM.ContourPoint(_tModel.ShiftHorizontallyRad(origin, 2500, 1, Math.PI/2), new TSM.Chamfer(0, 0, TSM.Chamfer.ChamferTypeEnum.CHAMFER_ARC_POINT));
+            TSM.ContourPoint p2 = new TSM.ContourPoint(_tModel.ShiftHorizontallyRad(origin, 2500, 1, Math.PI/2), null);
             TSM.ContourPoint p3 = new TSM.ContourPoint(_tModel.ShiftHorizontallyRad(origin, 5000, 3), new TSM.Chamfer(0, 0, TSM.Chamfer.ChamferTypeEnum.CHAMFER_ARC_POINT));
-            TSM.ContourPoint p4 = new TSM.ContourPoint(_tModel.ShiftHorizontallyRad(origin, 2500, 1, 3 * Math.PI/2), new TSM.Chamfer(0, 0, TSM.Chamfer.ChamferTypeEnum.CHAMFER_ARC_POINT));
+            TSM.ContourPoint p4 = new TSM.ContourPoint(_tModel.ShiftHorizontallyRad(origin, 2500, 1, 3 * Math.PI/2), null);
 
             _pointsList.Add(p1);
             _pointsList.Add(p2);
             _pointsList.Add(p3);
             _pointsList.Add(p4);
-            _pointsList.Add(p1);
 
-            _tModel.CreateContourPlate(_pointsList, "PL30", Globals.MaterialStr, "3", _global.Position, "Plate");
+            ContourPlate plate = _tModel.CreateContourPlate(_pointsList, "PL30", Globals.MaterialStr, "3", _global.Position, "Plate");
+/*
+            p1 = _tModel.ShiftVertically(p1, 200);
+            p2 = _tModel.ShiftVertically(p1, -400);
+            Beam cut = _tModel.CreateBeam(p1, p2, "SPD3000*3000*2000*2000*300", Globals.MaterialStr, BooleanPart.BooleanOperativeClassName, _global.Position, "cut");
+
+            _tModel.cutPart(cut, plate);*/
         }
 
         public void TestIntersectionOfLineXY()
