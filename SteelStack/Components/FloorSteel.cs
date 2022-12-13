@@ -25,7 +25,7 @@ namespace SteelStack.Components
             _global = global;
             _tModel = tModel;
 
-            _slope = 1.0 / 30.0;
+            _slope = 1.0;
 
             _pointsList = new List<TSM.ContourPoint>();
 
@@ -73,6 +73,8 @@ namespace SteelStack.Components
             CreateFloorSteelCut(floorPlate);
 
             _pointsList.Clear();
+
+            CreateFloorSteelBeams(FloorPlatePoint1 , FloorPlatePoint2, FloorPlatePoint3, FloorPlatePoint4);
         }
 
         public void CreateFloorSteelCut(TSM.ContourPlate floorPlate)
@@ -96,18 +98,32 @@ namespace SteelStack.Components
 
             _tModel.cutPart(cut, floorPlate);
 
+
         }
 
-        public void CreateFloorSteelBeams()
+        public void CreateFloorSteelBeams(TSM.ContourPoint floorPlatePoint1, TSM.ContourPoint floorPlatePoint2, TSM.ContourPoint floorPlatePoint3, TSM.ContourPoint floorPlatePoint4)
         {
+            // continous beams
+            TSM.ContourPoint floorPlateOrigin = _tModel.ShiftVertically(_global.Origin, (_global.StackSegList[0][2] / 2) - 15);
 
+            double distBetweenBeams = _tModel.GetRadiusAtElevation(floorPlateOrigin.Z, _global.StackSegList) * 2/5;
+
+            double horizontalDistfromCenter = -(_tModel.DistanceBetweenPoints(floorPlatePoint1, floorPlatePoint3) / 2);
+
+            for ( int i = 0; i < 4; i++ )
+            {
+                horizontalDistfromCenter += distBetweenBeams;
+                CreateLongBeam(horizontalDistfromCenter);
+
+                
+            }
         }
         public void CreateLongBeam(double horizontalDistfromCenter)
         {
-            TSM.ContourPoint floorPlateOrigin = _tModel.ShiftVertically(_global.Origin, _global.StackSegList[0][2]/2 - 15); // plate thickness 30 / 2 = 15
+            TSM.ContourPoint floorPlateOrigin = _tModel.ShiftVertically(_global.Origin, (_global.StackSegList[0][2]/2) - 15); // plate thickness 30 / 2 = 15
 
             ContourPoint beamMidPoint = _tModel.ShiftHorizontallyRad(floorPlateOrigin, horizontalDistfromCenter, 3);
-            beamMidPoint.Z = _tModel.PointSlopeForm(new[] { floorPlateOrigin.X, floorPlateOrigin.Z }, _slope, floorPlateOrigin.X + horizontalDistfromCenter);
+            beamMidPoint.Z = _tModel.PointSlopeForm(new[] { floorPlateOrigin.X, floorPlateOrigin.Z }, _slope, beamMidPoint.X);
 
             double rad = _tModel.GetRadiusAtElevation(beamMidPoint.Z, _global.StackSegList);
 
@@ -115,6 +131,20 @@ namespace SteelStack.Components
 
             ContourPoint beamPoint1 = _tModel.ShiftHorizontallyRad(beamMidPoint, verticalDistanceFromCenter, 2);
             ContourPoint beamPoint2 = _tModel.ShiftHorizontallyRad(beamMidPoint, verticalDistanceFromCenter, 4);
+
+            _global.ProfileStr = "L100*100*10";
+            _global.ClassStr = "3";
+            _global.Position.Plane = Position.PlaneEnum.MIDDLE;
+            _global.Position.Rotation = Position.RotationEnum.BELOW;
+            _global.Position.Depth = Position.DepthEnum.BEHIND;
+
+            _tModel.CreateBeam(beamPoint1, beamPoint2, _global.ProfileStr, Globals.MaterialStr, _global.ClassStr, _global.Position);
+
+
+            ContourPoint testpt = new ContourPoint(floorPlateOrigin, null);
+            testpt.Z = beamMidPoint.Z;
+            testpt = _tModel.ShiftHorizontallyRad(testpt, rad, 1);
+            _tModel.CreateBeam(floorPlateOrigin, testpt, "ROD30", Globals.MaterialStr, _global.ClassStr, _global.Position);
 
         }
     }

@@ -72,5 +72,7 @@ namespace SteelStack.Components
             _tModel.CreateBeam(StartPoint2, EndPoint2, "Rod50", Globals.MaterialStr, "3", _global.Position, "Beam2");
             _tModel.CreateBeam(StartPoint3, EndPoint3, "Rod50", Globals.MaterialStr, "3", _global.Position, "Beam3");
         }      
+
+
     }
 }
