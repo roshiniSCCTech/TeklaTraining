@@ -33,7 +33,9 @@ namespace SteelStack.Components
         {
             //TestIntersectionOfLineXY();
 
-            TSM.ContourPoint origin = new TSM.ContourPoint(_global.Origin, null);
+            // TestEllipseBeams();
+
+            /*TSM.ContourPoint origin = new TSM.ContourPoint(_global.Origin, null);
             TSM.ContourPoint p1 = new TSM.ContourPoint(_tModel.ShiftHorizontallyRad(origin, 5000, 1), new TSM.Chamfer(0, 0, TSM.Chamfer.ChamferTypeEnum.CHAMFER_ARC_POINT));
             TSM.ContourPoint p2 = new TSM.ContourPoint(_tModel.ShiftHorizontallyRad(origin, 2500, 1, Math.PI/2), null);
             TSM.ContourPoint p3 = new TSM.ContourPoint(_tModel.ShiftHorizontallyRad(origin, 5000, 3), new TSM.Chamfer(0, 0, TSM.Chamfer.ChamferTypeEnum.CHAMFER_ARC_POINT));
@@ -44,7 +46,7 @@ namespace SteelStack.Components
             _pointsList.Add(p3);
             _pointsList.Add(p4);
 
-            ContourPlate plate = _tModel.CreateContourPlate(_pointsList, "PL30", Globals.MaterialStr, "3", _global.Position, "Plate");
+            ContourPlate plate = _tModel.CreateContourPlate(_pointsList, "PL30", Globals.MaterialStr, "3", _global.Position, "Plate");*/
 /*
             p1 = _tModel.ShiftVertically(p1, 200);
             p2 = _tModel.ShiftVertically(p1, -400);
@@ -71,8 +73,62 @@ namespace SteelStack.Components
             _tModel.CreateBeam(StartPoint1, EndPoint1, "Rod50", Globals.MaterialStr, "3", _global.Position, "Beam1");
             _tModel.CreateBeam(StartPoint2, EndPoint2, "Rod50", Globals.MaterialStr, "3", _global.Position, "Beam2");
             _tModel.CreateBeam(StartPoint3, EndPoint3, "Rod50", Globals.MaterialStr, "3", _global.Position, "Beam3");
-        }      
+        }
 
+        public void TestEllipseBeams()
+        {
+            TSM.ContourPoint origin = new TSM.ContourPoint(_global.Origin, null);
+            /*TSM.ContourPoint p1 = _tModel.ShiftHorizontallyRad(origin, 5000, 1);
+            TSM.ContourPoint p2 = _tModel.ShiftHorizontallyRad(origin, 2500, 2);
+            TSM.ContourPoint p3 = _tModel.ShiftHorizontallyRad(origin, 5000, 3);
+            TSM.ContourPoint p4 = _tModel.ShiftHorizontallyRad(origin, 2500, 4);
+
+            _pointsList.Add(p1);
+            _pointsList.Add(p2);
+            _pointsList.Add(p3);
+            _pointsList.Add(p4);
+
+
+            ContourPlate plate = _tModel.CreateContourPlate(_pointsList, "PL30", Globals.MaterialStr, "3", _global.Position, "Plate");*/
+
+            TSM.ContourPoint p1 = _tModel.ShiftVertically(origin, 15);
+            TSM.ContourPoint p2 = _tModel.ShiftVertically(origin, -15);
+
+            _global.ProfileStr = "ELD10000*5000*10000*5000";
+            _global.ClassStr = "3";
+            _global.Position.Plane = Position.PlaneEnum.MIDDLE;
+            _global.Position.Rotation = Position.RotationEnum.BELOW;
+            _global.Position.Depth = Position.DepthEnum.MIDDLE;
+
+            _tModel.CreateBeam(p1, p2, _global.ProfileStr, Globals.MaterialStr, _global.ClassStr, _global.Position);
+
+            origin = _tModel.ShiftVertically(origin, -30);
+
+            double angle = 0;
+
+            while (angle < 360)
+            {
+                double radAngle = angle * Math.PI / 180;
+                double minorAxis = 2500;
+                double majorAxis = 5000;
+
+                double x = _global.Origin.X + (majorAxis * Math.Cos(radAngle));
+                double y = _global.Origin.Y + (minorAxis * Math.Sin(radAngle));
+
+                ContourPoint pt = new ContourPoint(new T3D.Point(x, y, origin.Z), null);
+
+
+                _global.ProfileStr = "L100*100*10";
+                _global.ClassStr = "3";
+                _global.Position.Plane = Position.PlaneEnum.MIDDLE;
+                _global.Position.Rotation = Position.RotationEnum.BELOW;
+                _global.Position.Depth = Position.DepthEnum.BEHIND;
+
+                _tModel.CreateBeam(origin, pt, _global.ProfileStr, Globals.MaterialStr, _global.ClassStr, _global.Position);
+
+                angle += 30;
+            }
+        }
 
     }
 }

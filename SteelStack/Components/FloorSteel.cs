@@ -17,6 +17,7 @@ namespace SteelStack.Components
         TeklaModelling _tModel;
 
         double _slope;
+        double _slopeAngle;
 
         List<TSM.ContourPoint> _pointsList;
 
@@ -26,6 +27,7 @@ namespace SteelStack.Components
             _tModel = tModel;
 
             _slope = 1.0;
+            _slopeAngle = Math.Atan(_slope);
 
             _pointsList = new List<TSM.ContourPoint>();
 
@@ -75,6 +77,7 @@ namespace SteelStack.Components
             _pointsList.Clear();
 
             CreateFloorSteelBeams(FloorPlatePoint1 , FloorPlatePoint2, FloorPlatePoint3, FloorPlatePoint4);
+            
         }
 
         public void CreateFloorSteelCut(TSM.ContourPlate floorPlate)
@@ -106,28 +109,40 @@ namespace SteelStack.Components
             // continous beams
             TSM.ContourPoint floorPlateOrigin = _tModel.ShiftVertically(_global.Origin, (_global.StackSegList[0][2] / 2) - 15);
 
-            double distBetweenBeams = _tModel.GetRadiusAtElevation(floorPlateOrigin.Z, _global.StackSegList) * 2/5;
+            double inclinedDistBetweenBeams = _tModel.DistanceBetweenPoints(floorPlatePoint1, floorPlatePoint3)/5;
 
-            double horizontalDistfromCenter = -(_tModel.DistanceBetweenPoints(floorPlatePoint1, floorPlatePoint3) / 2);
+            double inclinedDistFromCenter = -_tModel.DistanceBetweenPoints(floorPlatePoint1, floorPlateOrigin);
 
             for ( int i = 0; i < 4; i++ )
             {
-                horizontalDistfromCenter += distBetweenBeams;
-                CreateLongBeam(horizontalDistfromCenter);
-
-                
+                inclinedDistFromCenter += inclinedDistBetweenBeams;
+                double xDistanceFromCenter = inclinedDistFromCenter * Math.Cos(_slopeAngle);
+                CreateContinuousBeam(xDistanceFromCenter);
             }
-        }
-        public void CreateLongBeam(double horizontalDistfromCenter)
-        {
-            TSM.ContourPoint floorPlateOrigin = _tModel.ShiftVertically(_global.Origin, (_global.StackSegList[0][2]/2) - 15); // plate thickness 30 / 2 = 15
 
-            ContourPoint beamMidPoint = _tModel.ShiftHorizontallyRad(floorPlateOrigin, horizontalDistfromCenter, 3);
+            // broken beams
+
+            double distBetweenBeams = _tModel.DistanceBetweenPoints(floorPlatePoint2, floorPlatePoint4)/5;
+
+            double yDistFromCenter = -_tModel.DistanceBetweenPoints(floorPlatePoint2, floorPlateOrigin);
+
+            for (int i = 0; i < 4; i++)
+            {
+                yDistFromCenter += distBetweenBeams;
+                CreateBrokenBeam(yDistFromCenter, floorPlatePoint1, floorPlatePoint3);
+            }
+
+        }
+        public void CreateContinuousBeam(double xDistFromCenter)
+        {
+            TSM.ContourPoint floorPlateOrigin = _tModel.ShiftVertically(_global.Origin, (_global.StackSegList[0][2]/2) - (15/ Math.Cos(_slopeAngle))); // plate thickness 30 / 2 = 15
+
+            ContourPoint beamMidPoint = _tModel.ShiftHorizontallyRad(floorPlateOrigin, xDistFromCenter, 3);
             beamMidPoint.Z = _tModel.PointSlopeForm(new[] { floorPlateOrigin.X, floorPlateOrigin.Z }, _slope, beamMidPoint.X);
 
-            double rad = _tModel.GetRadiusAtElevation(beamMidPoint.Z, _global.StackSegList);
+            double rad = _tModel.GetRadiusAtElevation(beamMidPoint.Z - _global.Origin.Z, _global.StackSegList);
 
-            double verticalDistanceFromCenter = Math.Sqrt(Math.Pow(rad, 2) - Math.Pow(horizontalDistfromCenter, 2));
+            double verticalDistanceFromCenter = Math.Sqrt(Math.Pow(rad, 2) - Math.Pow(xDistFromCenter, 2));
 
             ContourPoint beamPoint1 = _tModel.ShiftHorizontallyRad(beamMidPoint, verticalDistanceFromCenter, 2);
             ContourPoint beamPoint2 = _tModel.ShiftHorizontallyRad(beamMidPoint, verticalDistanceFromCenter, 4);
@@ -136,16 +151,51 @@ namespace SteelStack.Components
             _global.ClassStr = "3";
             _global.Position.Plane = Position.PlaneEnum.MIDDLE;
             _global.Position.Rotation = Position.RotationEnum.BELOW;
+            _global.Position.RotationOffset = _slopeAngle * 180/ Math.PI;
             _global.Position.Depth = Position.DepthEnum.BEHIND;
+
+            if (beamMidPoint.Z < floorPlateOrigin.Z)
+            {
+                _global.Position.Plane = Position.PlaneEnum.RIGHT;
+                _global.Position.Rotation = Position.RotationEnum.TOP;
+                _global.Position.RotationOffset = 90 - _slopeAngle * 180 / Math.PI;
+            }
 
             _tModel.CreateBeam(beamPoint1, beamPoint2, _global.ProfileStr, Globals.MaterialStr, _global.ClassStr, _global.Position);
 
+        }
 
-            ContourPoint testpt = new ContourPoint(floorPlateOrigin, null);
-            testpt.Z = beamMidPoint.Z;
-            testpt = _tModel.ShiftHorizontallyRad(testpt, rad, 1);
-            _tModel.CreateBeam(floorPlateOrigin, testpt, "ROD30", Globals.MaterialStr, _global.ClassStr, _global.Position);
+        public void CreateBrokenBeam(double yDistanceFromCenter, ContourPoint floorPlatePoint1, ContourPoint floorPlatePoint3)
+        {
+            ContourPoint p1 = _tModel.ShiftHorizontallyRad(floorPlatePoint1, yDistanceFromCenter, 2);
+            ContourPoint p2 = _tModel.ShiftHorizontallyRad(floorPlatePoint3, yDistanceFromCenter, 4);
+
+            _tModel.CreateBeam(p1, p2, _global.ProfileStr, Globals.MaterialStr, _global.ClassStr, _global.Position);
+
+            TSM.ContourPoint floorPlateOrigin = _tModel.ShiftVertically(_global.Origin, (_global.StackSegList[0][2] / 2) - (15 / Math.Cos(_slopeAngle)));
+            double rad = _tModel.GetRadiusAtElevation(floorPlateOrigin.Z - _global.Origin.Z, _global.StackSegList);
+
+            double angle = Math.Asin(yDistanceFromCenter/rad);
+
+            floorPlateOrigin = _tModel.ShiftVertically(floorPlateOrigin, (_global.StackSegList[0][2] / 2) + (15 / Math.Cos(_slopeAngle)));
+            ContourPoint taperedUpPoint = _tModel.ShiftHorizontallyRad(floorPlateOrigin, _global.StackSegList[0][0]/2, 1, angle);
+
+            floorPlateOrigin = _tModel.ShiftVertically(floorPlateOrigin, -_global.StackSegList[0][2]);
+            ContourPoint taperedDownPoint = _tModel.ShiftHorizontallyRad(floorPlateOrigin, _global.StackSegList[0][1]/2, 1, angle);
+
+            _tModel.CreateBeam(taperedUpPoint, taperedDownPoint, _global.ProfileStr, Globals.MaterialStr, _global.ClassStr, _global.Position);
+
+            angle = Math.Asin(yDistanceFromCenter / rad) + Math.PI;
+
+            floorPlateOrigin = _tModel.ShiftVertically(floorPlateOrigin, _global.StackSegList[0][2]);
+            taperedUpPoint = _tModel.ShiftHorizontallyRad(floorPlateOrigin, _global.StackSegList[0][0] / 2, 1, angle);
+
+            floorPlateOrigin = _tModel.ShiftVertically(floorPlateOrigin, -_global.StackSegList[0][2]);
+            taperedDownPoint = _tModel.ShiftHorizontallyRad(floorPlateOrigin, _global.StackSegList[0][1] / 2, 1, angle);
+
+            _tModel.CreateBeam(taperedUpPoint, taperedDownPoint, _global.ProfileStr, Globals.MaterialStr, _global.ClassStr, _global.Position);
 
         }
+
     }
 }

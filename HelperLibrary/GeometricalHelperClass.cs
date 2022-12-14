@@ -127,7 +127,7 @@ namespace HelperLibrary
 
         public double DistanceBetweenPoints( T3D.Point point1, T3D.Point point2)
         {
-            double distance = Math.Sqrt(Math.Pow((point1.Y - point2.Y), 2) + Math.Pow((point1.X - point2.X), 2));
+            double distance = Math.Sqrt((Math.Pow((point1.Y - point2.Y), 2) + Math.Pow((point1.X - point2.X), 2)) + Math.Pow((point1.Z - point2.Z), 2));
             return distance;
         }
 
