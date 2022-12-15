@@ -145,12 +145,12 @@ namespace SteelStack.Components
 
             double rad = _tModel.GetRadiusAtElevation(beamMidPoint.Z - _global.Origin.Z, _global.StackSegList);
 
-            double verticalDistanceFromCenter = Math.Sqrt(Math.Pow(rad, 2) - Math.Pow(xDistFromCenter, 2));
+            double yDistanceFromCenter = Math.Sqrt(Math.Pow(rad, 2) - Math.Pow(xDistFromCenter, 2));
 
-            ContourPoint beamPoint1 = _tModel.ShiftHorizontallyRad(beamMidPoint, verticalDistanceFromCenter, 2);
-            ContourPoint beamPoint2 = _tModel.ShiftHorizontallyRad(beamMidPoint, verticalDistanceFromCenter, 4);
+            ContourPoint beamPoint1 = _tModel.ShiftHorizontallyRad(beamMidPoint, yDistanceFromCenter, 2);
+            ContourPoint beamPoint2 = _tModel.ShiftHorizontallyRad(beamMidPoint, yDistanceFromCenter, 4);
 
-            _global.ProfileStr = "L100*100*10";
+            _global.ProfileStr = "C100*100*10";
             _global.ClassStr = "3";
             _global.Position.Plane = Position.PlaneEnum.MIDDLE;
             _global.Position.Rotation = Position.RotationEnum.BELOW;
@@ -169,79 +169,43 @@ namespace SteelStack.Components
 
         }
 
-        /*public void CreateBrokenBeam2(double yDistanceFromCenter, ContourPoint floorPlatePoint1, ContourPoint floorPlatePoint3)
-        {
-
-            ContourPoint p1 = _tModel.ShiftHorizontallyRad(floorPlatePoint1, yDistanceFromCenter, 2);
-            ContourPoint p2 = _tModel.ShiftHorizontallyRad(floorPlatePoint3, yDistanceFromCenter, 4);
-
-            // _tModel.CreateBeam(p1, p2, _global.ProfileStr, Globals.MaterialStr, _global.ClassStr, _global.Position);
-
-            TSM.ContourPoint floorPlateOrigin = _tModel.ShiftVertically(_global.Origin, (_global.StackSegList[0][2] / 2));
-
-            double rad = _tModel.GetRadiusAtElevation(floorPlateOrigin.Z - _global.Origin.Z, _global.StackSegList);
-
-            double angle = Math.Asin(yDistanceFromCenter/rad);
-
-            floorPlateOrigin = _tModel.ShiftVertically(_global.Origin, _global.StackSegList[0][2]);
-            ContourPoint taperedUpPoint = _tModel.ShiftHorizontallyRad(floorPlateOrigin, _global.StackSegList[0][0]/2 * Math.Cos(angle), 1);
-            taperedUpPoint = _tModel.ShiftHorizontallyRad(taperedUpPoint, yDistanceFromCenter, 2);
-
-            floorPlateOrigin = _tModel.ShiftVertically(floorPlateOrigin, -_global.StackSegList[0][2]);
-            ContourPoint taperedDownPoint = _tModel.ShiftHorizontallyRad(floorPlateOrigin, _global.StackSegList[0][1]/2 * Math.Cos(angle), 1);
-            taperedDownPoint = _tModel.ShiftHorizontallyRad(taperedDownPoint, yDistanceFromCenter, 2);
-
-             //_tModel.CreateBeam(taperedUpPoint, taperedDownPoint, _global.ProfileStr, Globals.MaterialStr, _global.ClassStr, _global.Position);
-
-            ContourPoint beamPt1 = _tModel.IntersectionOfLineXZ(p1, p2, taperedUpPoint, taperedDownPoint);
-
-            angle = Math.PI - Math.Asin(yDistanceFromCenter / rad);
-
-            floorPlateOrigin = _tModel.ShiftVertically(floorPlateOrigin, _global.StackSegList[0][2]);
-            taperedUpPoint = _tModel.ShiftHorizontallyRad(floorPlateOrigin, _global.StackSegList[0][0] / 2 * Math.Cos(angle), 1);
-            taperedUpPoint = _tModel.ShiftHorizontallyRad(taperedUpPoint, yDistanceFromCenter, 2);
-
-            floorPlateOrigin = _tModel.ShiftVertically(floorPlateOrigin, -_global.StackSegList[0][2]);
-            taperedDownPoint = _tModel.ShiftHorizontallyRad(floorPlateOrigin, _global.StackSegList[0][1] / 2 * Math.Cos(angle), 1);
-            taperedDownPoint = _tModel.ShiftHorizontallyRad(taperedDownPoint, yDistanceFromCenter, 2);
-
-            //_tModel.CreateBeam(taperedUpPoint, taperedDownPoint, _global.ProfileStr, Globals.MaterialStr, _global.ClassStr, _global.Position);
-
-            ContourPoint beamPt2 = _tModel.IntersectionOfLineXZ(p1, p2, taperedUpPoint, taperedDownPoint);
-
-             _tModel.CreateBeam(beamPt1, beamPt2, _global.ProfileStr, Globals.MaterialStr, _global.ClassStr, _global.Position);
-
-        }*/
-
         public void CreateBrokenBeam(double yDistanceFromCenter, ContourPoint floorPlatePoint1, ContourPoint floorPlatePoint3)
         {
-
             ContourPoint p1 = _tModel.ShiftHorizontallyRad(floorPlatePoint1, yDistanceFromCenter, 2);
             ContourPoint p2 = _tModel.ShiftHorizontallyRad(floorPlatePoint3, yDistanceFromCenter, 4);
 
-            TSM.ContourPoint floorPlateOrigin = _tModel.ShiftVertically(_global.Origin, (_global.StackSegList[0][2] / 2));
-
+            TSM.ContourPoint floorPlateOrigin = _tModel.ShiftVertically(_global.Origin, _global.StackSegList[0][2]);
             double rad = _tModel.GetRadiusAtElevation(floorPlateOrigin.Z - _global.Origin.Z, _global.StackSegList);
-
             double angle = Math.Asin(yDistanceFromCenter / rad);
 
-            floorPlateOrigin = _tModel.ShiftVertically(_global.Origin, _global.StackSegList[0][2]);
             ContourPoint taperedUpPoint = _tModel.ShiftHorizontallyRad(floorPlateOrigin, _global.StackSegList[0][0] / 2, 1, angle);
 
             floorPlateOrigin = _tModel.ShiftVertically(floorPlateOrigin, -_global.StackSegList[0][2]);
+            rad = _tModel.GetRadiusAtElevation(floorPlateOrigin.Z - _global.Origin.Z, _global.StackSegList);
+            angle = Math.Asin(yDistanceFromCenter / rad);
+
             ContourPoint taperedDownPoint = _tModel.ShiftHorizontallyRad(floorPlateOrigin, _global.StackSegList[0][1] / 2, 1, angle);
 
             ContourPoint beamPt1 = _tModel.IntersectionOfLineXZ(p1, p2, taperedUpPoint, taperedDownPoint);
 
+            floorPlateOrigin = _tModel.ShiftVertically(floorPlateOrigin, _global.StackSegList[0][2]);
+            rad = _tModel.GetRadiusAtElevation(floorPlateOrigin.Z - _global.Origin.Z, _global.StackSegList);
             angle = Math.PI - Math.Asin(yDistanceFromCenter / rad);
 
-            floorPlateOrigin = _tModel.ShiftVertically(floorPlateOrigin, _global.StackSegList[0][2]);
-            taperedUpPoint = _tModel.ShiftHorizontallyRad(floorPlateOrigin, _global.StackSegList[0][0] / 2, 1, angle);
+            taperedUpPoint = _tModel.ShiftHorizontallyRad(floorPlateOrigin, _global.StackSegList[0][0] / 2 * Math.Cos(angle), 1);
+            taperedUpPoint = _tModel.ShiftHorizontallyRad(taperedUpPoint, yDistanceFromCenter, 2);
 
             floorPlateOrigin = _tModel.ShiftVertically(floorPlateOrigin, -_global.StackSegList[0][2]);
-            taperedDownPoint = _tModel.ShiftHorizontallyRad(floorPlateOrigin, _global.StackSegList[0][1] / 2, 1, angle);
+            rad = _tModel.GetRadiusAtElevation(floorPlateOrigin.Z - _global.Origin.Z, _global.StackSegList);
+            angle = Math.PI - Math.Asin(yDistanceFromCenter / rad);
+
+            taperedDownPoint = _tModel.ShiftHorizontallyRad(floorPlateOrigin, _global.StackSegList[0][1] / 2 * Math.Cos(angle), 1);
+            taperedDownPoint = _tModel.ShiftHorizontallyRad(taperedDownPoint, yDistanceFromCenter, 2);
 
             ContourPoint beamPt2 = _tModel.IntersectionOfLineXZ(p1, p2, taperedUpPoint, taperedDownPoint);
+
+            _global.ProfileStr = "L100*100*10";
+            _global.Position.RotationOffset = 0;
 
             ContourPoint beamSegmentStartPt = new ContourPoint();
             ContourPoint beamSegmentEndPt = new ContourPoint(p2, null);
