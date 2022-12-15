@@ -113,7 +113,7 @@ namespace SteelStack.Components
 
             double inclinedDistBetweenBeams = _tModel.DistanceBetweenPoints(floorPlatePoint1, floorPlatePoint3)/5;
 
-            double inclinedDistFromCenter = -_tModel.DistanceBetweenPoints(floorPlatePoint1, floorPlateOrigin);
+            double inclinedDistFromCenter = -_tModel.DistanceBetweenPoints(floorPlatePoint3, floorPlateOrigin);
 
             for ( int i = 0; i < 4; i++ )
             {
@@ -139,9 +139,8 @@ namespace SteelStack.Components
         {
             TSM.ContourPoint floorPlateOrigin = _tModel.ShiftVertically(_global.Origin, _global.StackSegList[0][2]/2); // plate thickness 30 / 2 = 15
 
-            ContourPoint beamMidPoint = _tModel.ShiftHorizontallyRad(floorPlateOrigin, xDistFromCenter, 3);
-            beamMidPoint = _tModel.ShiftVertically(beamMidPoint, - xDistFromCenter * Math.Tan(_slopeAngle));
-            //beamMidPoint.Z = _tModel.PointSlopeForm(new[] { floorPlateOrigin.X, floorPlateOrigin.Z }, _slope, beamMidPoint.X);
+            ContourPoint beamMidPoint = _tModel.ShiftHorizontallyRad(floorPlateOrigin, xDistFromCenter, 1);
+            beamMidPoint = _tModel.ShiftVertically(beamMidPoint, xDistFromCenter * Math.Tan(_slopeAngle));
 
             double rad = _tModel.GetRadiusAtElevation(beamMidPoint.Z - _global.Origin.Z, _global.StackSegList);
 
