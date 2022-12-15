@@ -69,6 +69,10 @@
             this.chk_handrail = new System.Windows.Forms.CheckBox();
             this.chk_platform = new System.Windows.Forms.CheckBox();
             this.chk_floorSteel = new System.Windows.Forms.CheckBox();
+            this.lbl_floorSteelThickness = new System.Windows.Forms.Label();
+            this.txt_floorSteelThickness = new System.Windows.Forms.TextBox();
+            this.lbl_floorSteelSlope = new System.Windows.Forms.Label();
+            this.txt_floorSteelSlope = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // lbl_originX
@@ -118,7 +122,6 @@
             this.lbl_originZ.Size = new System.Drawing.Size(84, 24);
             this.lbl_originZ.TabIndex = 4;
             this.lbl_originZ.Text = "Origin Z";
-            this.lbl_originZ.Click += new System.EventHandler(this.txt_originZ_Click);
             // 
             // txt_originZ
             // 
@@ -338,7 +341,6 @@
             this.lbl_startAngle.Size = new System.Drawing.Size(89, 20);
             this.lbl_startAngle.TabIndex = 31;
             this.lbl_startAngle.Text = "Start Angle";
-            this.lbl_startAngle.Click += new System.EventHandler(this.lbl_startAngle_Click);
             // 
             // lbl_endAngle
             // 
@@ -469,7 +471,44 @@
             this.chk_floorSteel.TabIndex = 44;
             this.chk_floorSteel.Text = "Floor Steel";
             this.chk_floorSteel.UseVisualStyleBackColor = true;
-            this.chk_floorSteel.CheckedChanged += new System.EventHandler(this.chk_floorSteel_CheckedChanged);
+            // 
+            // lbl_floorSteelThickness
+            // 
+            this.lbl_floorSteelThickness.AutoSize = true;
+            this.lbl_floorSteelThickness.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_floorSteelThickness.Location = new System.Drawing.Point(25, 479);
+            this.lbl_floorSteelThickness.Name = "lbl_floorSteelThickness";
+            this.lbl_floorSteelThickness.Size = new System.Drawing.Size(161, 20);
+            this.lbl_floorSteelThickness.TabIndex = 45;
+            this.lbl_floorSteelThickness.Text = "Floor Steel Thickness";
+            // 
+            // txt_floorSteelThickness
+            // 
+            this.txt_floorSteelThickness.AccessibleName = "";
+            this.txt_floorSteelThickness.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_floorSteelThickness.Location = new System.Drawing.Point(220, 468);
+            this.txt_floorSteelThickness.Name = "txt_floorSteelThickness";
+            this.txt_floorSteelThickness.Size = new System.Drawing.Size(121, 31);
+            this.txt_floorSteelThickness.TabIndex = 46;
+            // 
+            // lbl_floorSteelSlope
+            // 
+            this.lbl_floorSteelSlope.AutoSize = true;
+            this.lbl_floorSteelSlope.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_floorSteelSlope.Location = new System.Drawing.Point(494, 475);
+            this.lbl_floorSteelSlope.Name = "lbl_floorSteelSlope";
+            this.lbl_floorSteelSlope.Size = new System.Drawing.Size(131, 20);
+            this.lbl_floorSteelSlope.TabIndex = 47;
+            this.lbl_floorSteelSlope.Text = "Floor Steel Slope";
+            // 
+            // txt_floorSteelSlope
+            // 
+            this.txt_floorSteelSlope.AccessibleName = "";
+            this.txt_floorSteelSlope.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_floorSteelSlope.Location = new System.Drawing.Point(663, 468);
+            this.txt_floorSteelSlope.Name = "txt_floorSteelSlope";
+            this.txt_floorSteelSlope.Size = new System.Drawing.Size(121, 31);
+            this.txt_floorSteelSlope.TabIndex = 48;
             // 
             // inputForm
             // 
@@ -477,6 +516,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ClientSize = new System.Drawing.Size(1182, 661);
+            this.Controls.Add(this.txt_floorSteelSlope);
+            this.Controls.Add(this.lbl_floorSteelSlope);
+            this.Controls.Add(this.txt_floorSteelThickness);
+            this.Controls.Add(this.lbl_floorSteelThickness);
             this.Controls.Add(this.chk_floorSteel);
             this.Controls.Add(this.chk_platform);
             this.Controls.Add(this.chk_handrail);
@@ -569,6 +612,10 @@
         private System.Windows.Forms.CheckBox chk_handrail;
         private System.Windows.Forms.CheckBox chk_platform;
         private System.Windows.Forms.CheckBox chk_floorSteel;
+        private System.Windows.Forms.Label lbl_floorSteelThickness;
+        public System.Windows.Forms.TextBox txt_floorSteelThickness;
+        private System.Windows.Forms.Label lbl_floorSteelSlope;
+        public System.Windows.Forms.TextBox txt_floorSteelSlope;
     }
 }
 

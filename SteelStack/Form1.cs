@@ -26,12 +26,6 @@ namespace SteelStack
         {
 
         }
-
-        private void txt_originZ_Click(object sender, EventArgs e)
-        {
-            
-        }
-
         private void btn_createModel_Click(object sender, EventArgs e)
         {
             handleInputs();
@@ -144,6 +138,16 @@ namespace SteelStack
             {
                 txt_extensionLength.Text = ConfigurationManager.AppSettings["extensionLength"];
             }
+
+            if (txt_floorSteelThickness.Text == "" || txt_floorSteelThickness.Text == null)
+            {
+                txt_floorSteelThickness.Text = ConfigurationManager.AppSettings["floorSteelThickness"];
+            }
+
+            if (txt_floorSteelSlope.Text == "" || txt_floorSteelSlope.Text == null)
+            {
+                txt_floorSteelSlope.Text = ConfigurationManager.AppSettings["floorSteelSlope"];
+            }
         }
 
         void SendInputs()
@@ -177,7 +181,10 @@ namespace SteelStack
                 Convert.ToDouble(txt_platformLength.Text),
                 Convert.ToDouble(txt_extensionStartAngle.Text),
                 Convert.ToDouble(txt_extensionEndAngle.Text),
-                Convert.ToDouble(txt_extensionLength.Text));
+                Convert.ToDouble(txt_extensionLength.Text),
+                Convert.ToDouble(txt_floorSteelThickness.Text),
+                Convert.ToDouble(txt_floorSteelSlope.Text)
+                );
 
             TeklaModelling teklaModel = new TeklaModelling(
                 Convert.ToDouble(txt_originX.Text),
@@ -192,17 +199,7 @@ namespace SteelStack
 
             ComponentHandler componentHandle = new ComponentHandler(global, teklaModel, checkComponents);
 
-            
         }
 
-        private void lbl_startAngle_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void chk_floorSteel_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }

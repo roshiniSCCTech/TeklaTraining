@@ -131,6 +131,13 @@ namespace HelperLibrary
             return distance;
         }
 
+        public TSM.ContourPoint MidPoint( T3D.Point point1, T3D.Point point2)
+        {
+            TSM.ContourPoint mid = new TSM.ContourPoint(new T3D.Point((point1.X + point2.X)/2, (point1.Y + point2.Y)/2, (point1.Z + point2.Z)/2), null);
+
+            return mid;
+        }
+
         public double AngleBetweenPoints(T3D.Point point1, T3D.Point point2)
         {
             double rad = DistanceBetweenPoints(_origin, point1);

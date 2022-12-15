@@ -21,6 +21,8 @@ namespace SteelStack
         // 0 - top inner diameter, 1 - bottom inner diameter, 2 - height, 3 - thickness, 4 - height from base stack to bottom of segment
         public readonly List<List<Double>> StackSegList;
          
+        // PLatform 
+
         public readonly double PlatformStartAngle;
         public readonly double PlatformEndAngle;
         public readonly double PlatformLength;
@@ -28,6 +30,10 @@ namespace SteelStack
         public readonly double ExtensionStartAngle;
         public readonly double ExtensionEndAngle;
         public readonly double ExtensionLength;
+
+        // Floor Steel
+        public readonly double FloorSteelThickness;
+        public readonly double FloorSteelSlope;
 
         public Globals(
             double originX,
@@ -39,7 +45,10 @@ namespace SteelStack
             double platformLength,
             double extensionStartAngle,
             double extensionEndAngle,
-            double extensionLength)
+            double extensionLength,
+            double floorSteelThickness,
+            double floorSteelSlope
+            )
         {
             Origin = new TSM.ContourPoint(new T3D.Point(originX, originY, originZ), null);
             ProfileStr = "";
@@ -53,6 +62,8 @@ namespace SteelStack
             ExtensionStartAngle = extensionStartAngle * Math.PI / 180;
             ExtensionEndAngle = extensionEndAngle * Math.PI / 180;
             ExtensionLength = extensionLength;
+            FloorSteelThickness = floorSteelThickness;
+            FloorSteelSlope = floorSteelSlope;
         }
     }
 }
