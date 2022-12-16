@@ -131,6 +131,12 @@ namespace HelperLibrary
             return distance;
         }
 
+        public double DistanceBetweenPointsXY(T3D.Point point1, T3D.Point point2)
+        {
+            double distance = Math.Sqrt((Math.Pow((point1.Y - point2.Y), 2) + Math.Pow((point1.X - point2.X), 2)));
+            return distance;
+        }
+
         public TSM.ContourPoint MidPoint( T3D.Point point1, T3D.Point point2)
         {
             TSM.ContourPoint mid = new TSM.ContourPoint(new T3D.Point((point1.X + point2.X)/2, (point1.Y + point2.Y)/2, (point1.Z + point2.Z)/2), null);
@@ -138,20 +144,20 @@ namespace HelperLibrary
             return mid;
         }
 
-        public double AngleBetweenPoints(T3D.Point point1, T3D.Point point2)
+        public double AngleBetweenPointsXY(T3D.Point point1, T3D.Point point2)
         {
-            double rad = DistanceBetweenPoints(_origin, point1);
-            double chordLength = DistanceBetweenPoints(point2, point1);
+            double rad = DistanceBetweenPointsXY(_origin, point1);
+            double chordLength = DistanceBetweenPointsXY(point2, point1);
 
             double angle = Math.Asin(chordLength / (2 * rad)) * 2; ;
 
             return angle;
         }
 
-        public double ArcLengthBetweenPoints(T3D.Point point1, T3D.Point point2)
+        public double ArcLengthBetweenPointsXY(T3D.Point point1, T3D.Point point2)
         {
-            double rad = DistanceBetweenPoints(_origin, point1);
-            double angle = AngleBetweenPoints(point2, point1);
+            double rad = DistanceBetweenPointsXY(_origin, point1);
+            double angle = AngleBetweenPointsXY(point2, point1);
 
             double arcLength = rad * angle;
             return arcLength;

@@ -39,15 +39,37 @@ namespace SteelStack.Components
 
         public void CreateFloorPlate()
         {
+            //  to find equation of two slanted lines on the surface of the tapered segment with constant y = _global.Origin.Y 
+
+            //                    //            \\
+            //                   //              \\
+            //                  //                \\
+            //                 //                  \\
+            //                //                    \\
+            //               //                      \\
+            //              //                        \\
+
             TSM.ContourPoint floorPlateOrigin = _tModel.ShiftVertically(_global.Origin, _global.StackSegList[0][2]);
-
-
             TSM.ContourPoint taperedSegmentPointUp1 = _tModel.ShiftHorizontallyRad(floorPlateOrigin, _global.StackSegList[0][0] / 2, 1);
             TSM.ContourPoint taperedSegmentPointUp2 = _tModel.ShiftHorizontallyRad(floorPlateOrigin, _global.StackSegList[0][0] / 2, 3);
             floorPlateOrigin = _tModel.ShiftVertically(floorPlateOrigin, -_global.StackSegList[0][2]);
             TSM.ContourPoint taperedSegmentPointDown1 = _tModel.ShiftHorizontallyRad(floorPlateOrigin, _global.StackSegList[0][1] / 2, 1);
             TSM.ContourPoint taperedSegmentPointDown2 = _tModel.ShiftHorizontallyRad(floorPlateOrigin, _global.StackSegList[0][1] / 2, 3);
 
+            //  to find equation of a line on the plate passing through the origin with constant y = _global.Origin.Y that extends out of the segment at both sides,
+            //  so took the bottom radius as the x-component. Find its intersction with the two slanted lines on tapered segment to get floorPlatePoint1 and floorPlatePoint3
+            // 
+            //                     //            \\
+            //                    //              \\        
+            //                   //                \\ 1 ////
+            //                  //                //////
+            //                 //           ///////  \\
+            //                //      ///////         \\
+            //               /////////                 \\
+            //            ////3                         \\
+            //             //                            \\
+            //            //                              \\
+            //     
 
             floorPlateOrigin = _tModel.ShiftVertically(floorPlateOrigin, _global.StackSegList[0][2] / 2);
 
@@ -57,6 +79,24 @@ namespace SteelStack.Components
             TSM.ContourPoint platePoint2 = _tModel.ShiftHorizontallyRad(floorPlateOrigin, _global.StackSegList[0][1] / 2, 3);
             platePoint2 = _tModel.ShiftVertically(platePoint2, -_global.StackSegList[0][1] / 2 * Math.Tan(_slopeAngle));
 
+
+            // to find two points floorPlatePoint2 and floorPlatePoint4 on the surface of the tapered segment at the elevation of the center
+            //
+            //                                           XXXXXXX
+            //                                    XXXXXXXX     XXXX 1
+            //                              XXXXXX                XX
+            //                       2 XXXXXX                     XX
+            //                     XXXX                          XX
+            //                 XXXX                             XX
+            //              XXX                              XXX
+            //             XX                            XXXX
+            //          XXXX                          XXXX
+            //        XXX                         XXXXX
+            //       XX                    XXXXXXX 4
+            //       X                XXXXXX
+            //      XXX          XXXXXX
+            //      3 XXXXXX XXXX
+
             TSM.ContourPoint floorPlatePoint1 = new TSM.ContourPoint(_tModel.IntersectionOfLineXZ(platePoint1, platePoint2, taperedSegmentPointUp1, taperedSegmentPointDown1), null);
             TSM.ContourPoint floorPlatePoint2 = new TSM.ContourPoint(_tModel.ShiftHorizontallyRad(floorPlateOrigin, _tModel.GetRadiusAtElevation(floorPlateOrigin.Z - _global.Origin.Z, _global.StackSegList), 1, Math.PI / 2), null);
             TSM.ContourPoint floorPlatePoint3 = new TSM.ContourPoint(_tModel.IntersectionOfLineXZ(platePoint1, platePoint2, taperedSegmentPointUp2, taperedSegmentPointDown2), null);
@@ -64,7 +104,6 @@ namespace SteelStack.Components
 
             // the center of the floor plate doesn't coincide with the origin as the tapered segment cuts the plate more on the top (smaller radius) and less on the bottom (larger radius),
             // shifting the center to the left of the origin for a positive slope
-
             TSM.ContourPoint floorPlateCenter = _tModel.MidPoint(floorPlatePoint1, floorPlatePoint3);
             TSM.ContourPoint floorPlateUpPoint = _tModel.ShiftHorizontallyRad(floorPlateCenter, _global.FloorSteelThickness * Math.Sin(_slopeAngle), 3, 0);
             floorPlateUpPoint = _tModel.ShiftVertically(floorPlateUpPoint, _global.FloorSteelThickness * Math.Cos(_slopeAngle));
