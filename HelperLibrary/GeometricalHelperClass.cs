@@ -24,12 +24,23 @@ namespace HelperLibrary
             double ptAngle = Math.Atan((point.Y - _origin.Y) / (point.X - _origin.X)); //angle of point from X - axis
             if (point.X == _origin.X)
             {
-                ptAngle = 0;
+                ptAngle = Math.PI / 2;
+
+                if (point.Y == _origin.Y)
+                {
+                    ptAngle = 0;
+                }
+
+                else if (point.Y < _origin.Y)
+                {
+                    ptAngle = 3 * Math.PI / 2;
+                }
             }
             else if (point.X < _origin.X)
             {
                 ptAngle += Math.PI;
             }
+            
             double rad = Math.Sqrt(Math.Pow((point.Y - _origin.Y), 2) + Math.Pow((point.X - _origin.X), 2));
             switch (option)
             {
@@ -73,7 +84,17 @@ namespace HelperLibrary
                 angle = Math.Atan((point.Y - _origin.Y) / (point.X - _origin.X)); // angle of point from x-axis
                 if (point.X == _origin.X)
                 {
-                    angle = 0;
+                    angle = Math.PI/2;
+
+                    if (point.Y == _origin.Y)
+                    {
+                        angle = 0;
+                    }
+
+                    else if (point.Y < _origin.Y)
+                    {
+                        angle = 3 * Math.PI / 2;
+                    }
                 }
                 else if (point.X < _origin.X)
                 {

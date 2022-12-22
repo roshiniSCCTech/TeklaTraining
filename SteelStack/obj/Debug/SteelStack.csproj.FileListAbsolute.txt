@@ -45,7 +45,6 @@ C:\Users\Roshini S\source\repos\TeklaTrainingProjects\SteelStack\bin\Debug\Tekla
 C:\Users\Roshini S\source\repos\TeklaTrainingProjects\SteelStack\bin\Debug\Tekla.Structures.Datatype.xml
 C:\Users\Roshini S\source\repos\TeklaTrainingProjects\SteelStack\bin\Debug\Tekla.Structures.Model.xml
 C:\Users\Roshini S\source\repos\TeklaTrainingProjects\SteelStack\obj\Debug\SteelStack.csproj.AssemblyReference.cache
-C:\Users\Roshini S\source\repos\TeklaTrainingProjects\SteelStack\obj\Debug\SteelStack.csproj.SuggestedBindingRedirects.cache
 C:\Users\Roshini S\source\repos\TeklaTrainingProjects\SteelStack\obj\Debug\SteelStack.inputForm.resources
 C:\Users\Roshini S\source\repos\TeklaTrainingProjects\SteelStack\obj\Debug\SteelStack.Properties.Resources.resources
 C:\Users\Roshini S\source\repos\TeklaTrainingProjects\SteelStack\obj\Debug\SteelStack.csproj.GenerateResource.cache

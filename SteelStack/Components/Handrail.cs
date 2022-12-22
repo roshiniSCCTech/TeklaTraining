@@ -121,6 +121,7 @@ namespace SteelStack.Components
                 if (_extensionEndsAtMidPlatform)
                 {
                     remainingPlatformArcDistance += _global.ExtensionLength;
+                    platformEndPoint = _tModel.ShiftAlongCircumferenceRad(platformEndPoint, _global.ExtensionLength, 2);
                 }
             }
 
@@ -151,7 +152,7 @@ namespace SteelStack.Components
 
                 if (extension)
                 {
-                    if (remainingPlatformArcDistance >= _tModel.ArcLengthBetweenPointsXY(platformStartPoint, platformEndPoint))
+                    if (remainingPlatformArcDistance >= _tModel.ArcLengthBetweenPointsXY(platformStartPoint, platformEndPoint) - 1)
                     {
                         if (_extensionStartsAtMidPlatform)
                         {
