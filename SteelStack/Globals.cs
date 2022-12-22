@@ -58,16 +58,20 @@ namespace SteelStack
             this.StackSegList = stackSegList;
             PlatformStartAngle = platformStartAngle * Math.PI / 180;
             PlatformEndAngle = platformEndAngle * Math.PI / 180;
-            if (PlatformEndAngle < PlatformStartAngle)
-            {
-                PlatformEndAngle += 2 * Math.PI;
-            }
             PlatformLength = platformLength;
             ExtensionStartAngle = extensionStartAngle * Math.PI / 180;
             ExtensionEndAngle = extensionEndAngle * Math.PI / 180;
-            if ( ExtensionEndAngle < ExtensionStartAngle)
+            if (ExtensionStartAngle < PlatformStartAngle)
+            {
+                ExtensionStartAngle += 2 * Math.PI;
+            }
+            if (ExtensionEndAngle < ExtensionStartAngle)
             {
                 ExtensionEndAngle += 2 * Math.PI;
+            }
+            if (PlatformEndAngle < ExtensionEndAngle)
+            {
+                PlatformEndAngle += 2 * Math.PI;
             }
             ExtensionLength = extensionLength;
             FloorSteelThickness = floorSteelThickness;

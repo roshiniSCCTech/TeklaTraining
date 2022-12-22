@@ -16,30 +16,38 @@ namespace HelperLibrary
         {
             _origin = new T3D.Point(originX, originY, originZ);
         }
+
+        public double AngleAtCenter(T3D.Point point)
+        {
+            double angle = Math.Atan((point.Y - _origin.Y) / (point.X - _origin.X)); // angle of point from x-axis
+            if (point.X == _origin.X)
+            {
+                angle = Math.PI / 2;
+
+                if (point.Y == _origin.Y)
+                {
+                    angle = 0;
+                }
+
+                else if (point.Y < _origin.Y)
+                {
+                    angle = 3 * Math.PI / 2;
+                }
+            }
+            else if (point.X < _origin.X)
+            {
+                angle += Math.PI;
+            }
+
+            return angle;
+        }
+
         // new point gets shifted along circumference at same elevation of given point
         // it gets shifted anti-clockwise if offset is positive, it gets shifted clockwise if offset is negative
         public TSM.ContourPoint ShiftAlongCircumferenceRad(TSM.ContourPoint point, double offset, short option) // 1. offset = angle in radians / arcLen / chordLen, 2. option = 1(angle), 2(arcLen), 3(chordLen)
         {
             TSM.ContourPoint shiftedPt;
-            double ptAngle = Math.Atan((point.Y - _origin.Y) / (point.X - _origin.X)); //angle of point from X - axis
-            if (point.X == _origin.X)
-            {
-                ptAngle = Math.PI / 2;
-
-                if (point.Y == _origin.Y)
-                {
-                    ptAngle = 0;
-                }
-
-                else if (point.Y < _origin.Y)
-                {
-                    ptAngle = 3 * Math.PI / 2;
-                }
-            }
-            else if (point.X < _origin.X)
-            {
-                ptAngle += Math.PI;
-            }
+            double ptAngle = AngleAtCenter(point);
             
             double rad = Math.Sqrt(Math.Pow((point.Y - _origin.Y), 2) + Math.Pow((point.X - _origin.X), 2));
             switch (option)
@@ -72,7 +80,6 @@ namespace HelperLibrary
             return shiftedPt;
         }
 
-
         // new point gets shifted along the 4 axis. 
         // when angle is not given as parametrer, the angle formed by point (first parameter) at the origin from x - axis is taken as angle.
         // when angle is given, the 4 axis gets rotated by that angle.
@@ -81,25 +88,7 @@ namespace HelperLibrary
             TSM.ContourPoint shiftedPt;
             if (double.IsNaN(angle))
             {
-                angle = Math.Atan((point.Y - _origin.Y) / (point.X - _origin.X)); // angle of point from x-axis
-                if (point.X == _origin.X)
-                {
-                    angle = Math.PI/2;
-
-                    if (point.Y == _origin.Y)
-                    {
-                        angle = 0;
-                    }
-
-                    else if (point.Y < _origin.Y)
-                    {
-                        angle = 3 * Math.PI / 2;
-                    }
-                }
-                else if (point.X < _origin.X)
-                {
-                    angle += Math.PI;
-                }
+                angle = AngleAtCenter(point);
             }
 
             switch(side)
@@ -167,10 +156,14 @@ namespace HelperLibrary
 
         public double AngleBetweenPointsXY(T3D.Point point1, T3D.Point point2)
         {
-            double rad = DistanceBetweenPointsXY(_origin, point1);
-            double chordLength = DistanceBetweenPointsXY(point2, point1);
+            double angle1 = AngleAtCenter(point1);
+            double angle2 = AngleAtCenter(point2);
+            if(angle2 < angle1)
+            {
+                angle2 += 2 * Math.PI;
+            }
 
-            double angle = Math.Asin(chordLength / (2 * rad)) * 2; ;
+            double angle = angle2 - angle1;
 
             return angle;
         }
@@ -178,7 +171,7 @@ namespace HelperLibrary
         public double ArcLengthBetweenPointsXY(T3D.Point point1, T3D.Point point2)
         {
             double rad = DistanceBetweenPointsXY(_origin, point1);
-            double angle = AngleBetweenPointsXY(point2, point1);
+            double angle = AngleBetweenPointsXY(point1, point2);
 
             double arcLength = rad * angle;
             return arcLength;
